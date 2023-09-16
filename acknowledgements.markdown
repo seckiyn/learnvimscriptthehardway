@@ -1,15 +1,16 @@
-Acknowledgements
+Teşekkürler
 ================
 
-First I'd like to thank [Zed Shaw][] for writing [Learn Python the Hard Way][]
-and making it freely available.  This book's format and writing style is
-directly inspired by it.
+[Zed Shaw][] [Learn Python the Hard Way][] kitabını yazdığı ve ücretsizce dağıttığı için teşekkür ederim.
+
+Bu kitabın yazım biçimi ve stili ondan doğrudan esinlenilmiştir.
 
 [Zed Shaw]: http://zedshaw.com/
 [Learn Python the Hard Way]: http://learnpythonthehardway.org/
 
-I'd also like to thank the following GitHub and Bitbucket users who sent pull
-requests, pointed out typos, raised issues, and otherwise contributed:
+Aynı zamanda pull request gönderen, yazım yanlışlarını gösteren, issue
+açan ve diğer türlü katkıda bulunan şu GitHub ve Bitbucket
+kullanıcılarına da teşekkür etmek isterim:
 
 * [aperiodic](https://github.com/aperiodic)
 * [billturner](https://github.com/billturner)
@@ -55,4 +56,4 @@ requests, pointed out typos, raised issues, and otherwise contributed:
 * [tapichu](https://github.com/tapichu)
 * [ZyX-I](https://github.com/ZyX-I)
 
-I apologize to anyone I've forgotten.
+Unuttuğum herkese özür dilerim.
