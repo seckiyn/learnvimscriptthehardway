@@ -1,30 +1,32 @@
-[Learn Vimscript the Hard Way][book] is a book for users of the [Vim][] editor
-who want to learn how to customize Vim.
+[Learn Vimscript the Hard Way][book] kitabı [Vim][] editörü kullanıcıları 
+ve Vim'i nasıl kullanacağını öğrenmek isteyen kullanıcılar içindir. 
 
-It is *not* a guide to *using* Vim.  Before reading this book you should be
-comfortable editing text in Vim and know what terms like "buffer", "window" and
-"insert mode" mean.
+Bu kitap Vim'i nasıl kullanacağınızı öğreten bir *rehber değildir*. Bu kitap Vim'de rahatça yazı editleyebilen ve "buffer", "window"
+ve "insert mode" ne demek bilmeniz gerekir.
 
-The book is divided roughly into three sections:
+Bu kitap kabaca üç bölüme ayrılmıştır:
 
-* The first covers basic Vim commands that you can use in your `~/.vimrc` file
-  to customize Vim quickly and easily.
-* The second looks more deeply at Vimscript as a programming language, covering
-  things like variables, comparisons, and functions.
+* İlk bölüm `~/.vimrc` dosyasında kullanabileceğiniz basit Vim komutlarını içerir
+* İkinci bölüm Vimscript'e bir programlama dili olarak bakarak değişkenleri
+  , karşılaştırmaları ve fonksiyon gibi şeyleri açıklayarak daha derin 
+  bir bakış atıyor.
 * The third walks through the creation of a sample plugin intended for
   distribution to other Vim users.
+* Üçüncü bölüm diğer Vim kullanıcılarına dağıtmak amacıyla bir örnek 
+  plugin nasıl yazılır adım adım öğretiyor.
 
-The book is [copyright][license] 2013 by Steve Losh, all rights reserved.  You
-can redistribute this HTML version as long as you don't make any changes and
-don't charge for it.
+Bu kitap [copyright][license] 2013 , Steve Losh, tüm hakları saklıdır.
+Bu HTML versiyonu herhangi bir değişiklik yapmadığınız ve fiyat talep 
+etmediğiniz sürece dağıtabilirsiniz.
 
-The book will always be free to read online.
 
-You can buy an [ebook (PDF, epub, mobi) version][leanpub] for $8 on Leanpub.
+Bu kitap her zaman çevrim içi olarak ücretsiz okunabilir olacak.
 
-You can buy a [paperback copy][paper] for $20 on Lulu.
+Leanpub'ta $8'a [ebook (PDF, epub, mobi) version][leanpub] olarak alabilirsiniz .
 
-You can buy a [hardcover copy][hard] for $40 on Lulu.
+Lulu'da $20'a [paperback copy][paper] olarak alabilirsiniz .
+
+Lulu'da $40'a [hardcover copy][hard] olarak alabilirsiniz .
 
 [leanpub]: http://leanpub.org/learnvimscriptthehardway
 [paper]: http://bit.ly/lvsthw-paperback
