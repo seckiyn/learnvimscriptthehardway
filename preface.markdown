@@ -1,21 +1,20 @@
-Preface
+Önsöz
 =======
 
-Programmers shape ideas into text.
+Yazılımcılar fikirleri yazıya aktarırlar.
 
-That text gets turned into numbers and those numbers bump into other numbers
-and *make things happen*.
+Bu yazılar önce sayılara ve bu sayılar diğer sayılara katıla katıla bir
+şeylerin olmasını sağlarlar.
 
-As programmers, we use text editors to get our ideas out of our heads and create
-the chunks of text we call "programs".  Full-time programmers will spend tens of
-thousands of hours of their lives interacting with their text editor, during
-which they'll be doing many things:
+Yazılımcılar olarak, biz yazı editörlerini fikirlerimizi aklımızdan çıkarıp
+bizim "yazılım" dediğimiz parçalara dönüştürmek için kullanırız. Tam zamanlı yazılımcılar yaşamlarını on binlerce saatlerini yazı editörleri ile 
+cebelleşerek, şunları yapmaya çalışırız:
 
-* Getting raw text from their brains into their computers.
-* Correcting mistakes in that text.
-* Restructuring the text to formulate a problem in a different way.
-* Documenting how and why something was done a particular way.
-* Communicating with other programmers about all of these things.
+* Akıllarındaki ham yazıyı bilgisayara aktarmak.
+* O yazılardaki hataları düzeltmek.
+* O yazıyı probleme farklı bir açıdan bakmak için yeniden inşa etmek.
+* Bir şey nasıl ve neden öyle yapıldı belgelemek.
+* Ve diğer yazılımcılarla tüm bu şeyler hakkında ileteşebilmek için.
 
 Vim is incredibly powerful out of the box, but it doesn't truly shine until you
 take some time to customize it for your particular work, habits, and fingers.
@@ -23,6 +22,15 @@ This book will introduce you to Vimscript, the main programming language used to
 customize Vim.  You'll be able to mold Vim into an editor suited to your own
 personal text editing needs and make the rest of your time in Vim more
 efficient.
+
+Vim hiçbir şey yapılmasa dahi inanılmaz güçlüdür ama kendi işiniz, 
+alışkanlıklarınız ve parmaklarınız için ayarlamak için biraz zaman 
+harcayana kadar tamamen parlamaz.
+Bu kitap sizi Vim'i ayarlamak için kullanılan ana programlama dili olan 
+Vimscript ile tanıştıracak.
+Vim'i keyfinize göre kalıba döküp kendi  yazı editleme ihtiyaçlarınıza 
+uygun ve çok daha verimli hale getirebileceksiniz
+
 
 Along the way I'll also mention things that aren't strictly about Vimscript, but
 are more about learning and being more efficient in general.  Vimscript isn't
