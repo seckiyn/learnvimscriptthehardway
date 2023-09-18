@@ -31,53 +31,52 @@ Vimscript ile tanıştıracak.
 Vim'i keyfinize göre kalıba döküp kendi  yazı editleme ihtiyaçlarınıza 
 uygun ve çok daha verimli hale getirebileceksiniz
 
-
-Along the way I'll also mention things that aren't strictly about Vimscript, but
-are more about learning and being more efficient in general.  Vimscript isn't
-going to help you much if you wind up fiddling with your editor all day instead
-of working, so it's important to strike a balance.
+Anlatımım boyunca Vimscript ile alakalı olmayan şeyler de anlatacağım, bunlar
+genellikle öğrenmek ve nasıl daha verimli olunur hakkında olacak. Eğer tüm gün
+küçük küçük editörle uğraşarak günü geçirirseniz Vimscrit pek de yardımcı
+olmayacaktır sizin için bu yüzden bir denge sağlamak mühimdir.
 
 The style of this book is a bit different from most other books about
 programming languages.  Instead of simply presenting you with facts about how
 Vimscript works, it guides you through typing in commands to see what they do.
 
-Sometimes the book will lead you into dead ends before explaining the "right
-way" to solve a problem.  Most other books don't do this, or only mention the
-sticky issues *after* showing you the solution.  This isn't how things typically
-happen in the real world, though.  Often you'll be writing a quick piece of
-Vimscript and run into a quirk of the language that you'll need to figure out.
-By stepping through this process in the book instead of glossing over it I hope
-to get you used to dealing with Vimscript's peculiarities so you're ready when
-you find edge cases of your own.  Practice makes perfect.
+Bu kitabın tarzı diğer programlama dili kitaplarından biraz farklıdır. Size
+Vimscript nasıl çalışır hakkında bir iki şey anlatmaktansa size komutları
+kullanarak ne yapıyor onu görmenize rehberlik eder.
 
-Each chapter of the book focuses on a single topic.  They're short but packed
-with information, so don't just skim them.  If you really want to get the most
-out of this book you need to actually type in all of the commands.  You may
-already be an experienced programmer who's used to reading code and
-understanding it straight away.  If so: it doesn't matter.  Learning Vim and
-Vimscript is a different experience from learning a normal programming language.
+Bu kitap bazenleri size problemi çözmek için "asıl" yolu göstermektense birkaç
+yanlış yolu gösterecek. Çoğu kitap genelde bunun tersini yapar, asıl yolu
+gösterdikten sonra sorun çıkarabilecek şeyleri *sonraya* bırakır. Ama herkes
+bilir ki bu gerçek yaşamda olanın tam tersidir. Genelde bir parça Vimscript
+yazdıktan sonra programlama dilinin tuhaflıkları ile karşılaşır ve onu çözmeniz
+gerekir.  Üstünkörü anlatmak yerine adım adım giderek tuhaflıklarına alışacak
+ve gözden kaçabilecek hataları bulurken işineze yarayacak. İşleyen demir
+ışıldar.
 
-You need to **type in *all* the commands.**
+Kitabın her bölümü tek bir konuya odaklı. Kısalar ama bilgi ile tıka basa
+dolular yani sakın "şöyle bir gözden geçirmeyin" eğer gerçekten öğrenmek ve
+kitabın sunduklarını sonuna kadar almak istiyorsanız teker teker komutları
+yazmanız gerekli. Çoktan okuduğu kodu anlayan deneyimli bir yazılımcı
+olabilirsiniz. Öyleyse bile önemli değil. Vim ve Vimscript'i öğrenmek normal
+bir programlama dilini öğrenmekten çok daha farklı bir serüven.
 
-You need to **do *all* the exercises.**
+**Tüm komutları yazmanız** gerek.
 
-There are two reasons this is so important.  First, Vimscript is old and has
-a lot of dusty corners and twisty hallways.  One configuration option can change
-how the entire language works.  By typing *every* command in *every* lesson and
-doing *every* exercise you'll discover problems with your Vim build or
-configuration on the simpler commands, where they'll be easier to diagnose and
-fix.
+***Tüm*** **egzersizleri tamamlamanız** gerek.
 
-Second, Vimscript *is* Vim.  To save a file in Vim, you type `:write` (or `:w`
-for short) and press return.  To save a file in a Vimscript, you use `write`.
-Many of the Vimscript commands you'll learn can be used in your day-to-day
-editing as well, but they're only helpful if they're in your muscle memory,
-which simply doesn't happen from just reading.
+Bunun çok önemli olmasını iki nedeni var: Birincisi, Vimscript eskidir ve bir sürü tozlu ve harabe yollardan oluşur. Sadece bir yapılandırma ayarı tüm dilin nasıl çalıştığını değiştirebilir. *Tüm* derslerdeki *tüm* komutları yazarak ve tüm egzersizleri yaparak Vim sürümünüz ve yapılandırmanızla ilgili sorunları daha küçük komutlarda fark edeceksiniz ki bu da o sorunları tanımlamanız ve çözmenizi kolaylaştıracak.
 
-I hope you'll find this book useful.  It's *not* meant to be a comprehensive
-guide to Vimscript.  It's meant to get you comfortable enough with the language
-to mold Vim to your taste, write some simple plugins for other users, read other
-people's code (with regular side-trips to `:help`), and recognize some of the
-common pitfalls.
+İkincisi, Vimscript Vim'in ta kendisidir. Vim'de bir dosya kaydetmek için
+:write (ya da kısası :w) yazar ve enter tuşuna basılır. Vimscript'te write
+komutunu kullanırsınız. Öğreneceğiniz birçok Vimscript komutunu aynı zamanda
+günlük işleriniz için de kullanabilirsiniz ama sadece kas hafızanızda kayıtlı
+ise size yardımcı olurlar yoksa sadece okumakla günlük hayatta kullanamazsınız. 
 
-Good luck!
+Umarım bu kitabı faydalı bulursunuz. Vimscript adına tüm her şeyi içine alınmak
+gayesi ile yazılmadığını unutmayın. Asıl gayesi Vim'i kendi isteğinize göre bir
+şekle sokmaya yetecek rahatlığa gelmeniz, diğer kullanıcılar için basit
+pluginler yazabilmeniz, diğer insanların yazdıklarını okuyabilmeniz(tabii ki
+:help'i sık sık ziyaret ederek) ve bazı çok karşılaşılan tehlikeleri
+görebilmeniz.
+
+İyi şanslar!
