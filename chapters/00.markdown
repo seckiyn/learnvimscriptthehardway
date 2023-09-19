@@ -1,43 +1,39 @@
-Prerequisites
+Ön koşullar
 =============
 
-To use this book you should have the latest version of Vim installed, which is
-version 7.3 at the time of this writing.  New versions of Vim are almost always
-backwards-compatible, so everything in this book should work fine with anything
-after 7.3 too.
+Bu kitabı kullanmak için Vim programının son sürümünü yüklemiş olmanız
+gerekiyor ki bu kitabın yayınladığı zamanda 7.3 sürümü. Vim'in yeni
+versiyonları neredeyse her zaman geriye dönük olarak uyumludur yani burada
+anlatılanların hepsi 7.3 sonrasında da çalışacaktır.
 
-Nothing in this book is specific to console Vim or GUI Vims like gVim or MacVim.
-You can use whichever you prefer.
+Bu kitapta anlatılan hiçbir şey ne Vim konsol versiyonuna ne de gVim ya da
+MacVim gibi GUI kullanan Vim'lere özel. Gönlünüzden hangisi geçiyorsa
+kullanabilirsiniz.
 
-You should be comfortable editing files in Vim.  You should know basic Vim
-terminology like "buffer", "window", "normal mode", "insert mode" and "text
-object".
+Başlamadan önce dosyalar Vim'de nasıl editleyebilmeliniz. Basit "buffer", "window", "normal mode", "insert mode" ve "text object" gibi Vim terimlerini bilmelisiniz.
 
-If you're not at that point yet you should go through the `vimtutor` program,
-use Vim exclusively for a month or two, and come back when you've got Vim burned
-into your fingers.
+Eğer şimdiye kadar `vimtutor` programını kullanmamışsanız bir üzerinden geçmeniz lazım, bir iki ay yalnızca Vim'i kullanmalı ve geri geldiğinizde Vim parmaklarınıza kazınmış olmalı.
 
-You'll also need to have some programming experience.  If you've never
-programmed before check out [Learn Python the Hard
-Way](http://learnpythonthehardway.org/) first and come back to this book when
-you're done.
+Aynı zamanda biraz yazılım deneyimine ihtiyacınız var. Eğer daha önce hiç
+kodlamadıysanız önce [Learn Python the Hard
+Way](http://learnpythonthehardway.org/) kitabına göz atın ve işiniz bitince bu
+kitaba geri dönün.
 
-Creating a Vimrc File
+Bir Vimrc Dosyası Yaratmak
 ---------------------
 
-If you already know what a `~/.vimrc` file is and have one, go on to the next
-chapter.
+Eğer halihazırda `~/.vimrc` dosyası nedir biliyor ve elinizde bir tane varsa doğrudan diğer bölüme geçebilirsiniz.
 
-A `~/.vimrc` file is a file you create that contains some Vimscript code.  Vim
-will automatically run the code inside this file every time you open Vim.
+`~/.vimrc` dosyası içine Vimscript kodu yazdığınız bir dosyasıdır. Vim otomatik
+olarak bu dosya içindeki kodu her açılışında çalıştırır.
 
-On Linux and Mac OS X this file is located in your home directory and named
-`.vimrc`.
+Linux ve Mac OS X'te bu dosya sizin home yolunda olacaktır ve ismi
+`.vimrc`'dir.
 
-On Windows this file is located in your home folder and named `_vimrc`.
+Windows'ta ise bu dosya home klasörünüzdedir ve ismi `_vimrc`'dir. 
 
-To easily find the location and name of the file on *any* operating system, run
-`:echo $MYVIMRC` in Vim.  The path will be displayed at the bottom of the
-screen.
+**Her** işletim sisteminde kolayca bu dosyanın yerini bulmak için Vim'de `:echo
+$MYVIMRC` komutunu çalıştırın. Bu dosyanın yolunu ekranın altında
+gösterecektir.
 
-Create this file if it doesn't already exist.
+Eğer ki dosya halihazırda yoksa aynı isimde bir dosyayı siz oluşturun.
