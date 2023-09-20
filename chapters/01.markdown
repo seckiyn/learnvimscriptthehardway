@@ -1,36 +1,39 @@
-Echoing Messages
+Mesaj Yazdırmak
 ================
 
-The first pieces of Vimscript we'll look at are the `echo` and `echom` commands.
+Vimscript'te bakacağımız ilk komutlar `echo` ve `echom` komutları olacak.
 
-You can read their full documentation by running `:help echo` and `:help echom`
-in Vim.  As you go through this book you should try to read the `:help` for
-every new command you encounter to learn more about them.
+Komutların tüm dökümantasyonunu okumak istiyorsanız `:help echo` ve `:help
+echom` komutlarını Vim içinde çalıştırarak okuyabilirsiniz. Bu kitapta farklı
+komutlarla karşılaştıkça onlar hakkında daha fazla bilgi almak için onların
+`:help` sayfalarını okuyabilirsiniz.
 
-Try out `echo` by running the following command:
+`echo` komutunu aşağıdaki komutu çalıştırarak deneyin:
 
     :::vim
     :echo "Hello, world!"
 
-You should see `Hello, world!` appear at the bottom of the window.
 
-Persistent Echoing
+Pencerenizin altında `Hello, world!` yazısının belirdiğini göreceksin.
+
+Kalıcı Yazdırma
 ------------------
 
-Now try out `echom` by running the following command.
+Şimdi de şu komutları çalıştırarak `echom` komutunu deneyin.
 
     :::vim
     :echom "Hello again, world!"
 
-You should see `Hello again, world!` appear at the bottom of the window.
+Pencerenin altında `Hello again, world!` yazısının belirdiğini görecekesiniz.
 
 To see the difference between these two commands, run the following:
+İki komut arasındaki farkı görmek için şu komutları çalıştırın:
 
     :::vim
     :messages
 
-You should see a list of messages.  `Hello, world!` will *not* be in this list,
-but `Hello again, world!` *will* be in it.
+Bir mesaj listesi göreceksiniz. Ama `Hello, world!` bu listede olmayacak fakat
+`Hello again, world!` bu listede olacak.
 
 When you're writing more complicated Vimscript later in this book you may find
 yourself wanting to "print some output" to help you debug problems.  Plain old
@@ -38,29 +41,38 @@ yourself wanting to "print some output" to help you debug problems.  Plain old
 is done.  Using `:echom` will save the output and let you run `:messages` to
 view it later.
 
-Comments
+Ileride Vimscript ile daha karmaşık scriptler yazarken debug amacıyla ekrana
+"bir şeyler yazdırmak" isteyebilirsiniz. Düz `:echo` komutu ekrana bir şeyler
+yazdırır ama script işini bitirene kadar kaybolur. `:echom` komutunu kullanmak
+ise yazdırılan çıktıyı kaydeder ve `:messages` komutunu kullanarak daha sonra
+görüntülemeye izin verir.
+
+Yorumlar
 --------
 
 Before moving on, let's look at how to add comments.  When you write Vimscript
 code (in your `~/.vimrc` file or any other one) you can add comments with the
 `"` character, like this:
 
+Daha ileriye gitmeden önce hadi gelin nasıl yorum bırakılır ona bakalım.
+Vimscript kodu yazarken(`~/.vimrc` dosyanızdaki veya başkaları gibi) koda
+yorumları `"` karakteri ile bırakabilirsiniz. Işte şöyle:
+
     :::vim
-    " Make space more useful
+    " Space tuşunu daha kullanışlı yap
     nnoremap <space> za
 
-This doesn't *always* work (that's one of those ugly corners of Vimscript), but
-in most cases it does.  Later we'll talk about when it won't (and why that
-happens).
+Bu her zaman çalışmaz (işte bu Vimscript'in talihsiz taraflarındandır) ama çoğu
+durumda çalışır. Daha sonraları ne zaman çalışmaz ona bakacağız. (ve neden
+böyle bir şey oluyor ona bakacağız)
 
-Exercises
+Egzersizler
 ---------
 
-Read `:help echo`.
+`:help echo` sayfasını oku.
 
-Read `:help echom`.
+`:help echom` sayfasını oku.
 
-Read `:help :messages`.
+`:help :messages` sayfasını oku.
 
-Add a line to your `~/.vimrc` file that displays a friendly ASCII-art cat
-(`>^.^<`) whenever you open Vim.
+`~/.vimrc` dosyanıza her Vim'i açtığınızda şu ASCII-Art kedinin (`>^.^<`) gösterilmesini sağlayacak bir satır ekleyin.
