@@ -1,15 +1,15 @@
-Setting Options
+Ayarları Kurmak
 ===============
 
-Vim has many options you can set to change how it behaves.
+Vim nasıl çalıştığını değiştirebileceğiniz bir sürü ayarla doludur.
 
-There are two main kinds of options: boolean options (either "on" or "off") and
-options that take a value.
+İki tane ana ayar türü vardır: boolean ayarlar (ya da "aç-kapa") ve değer
+alabilen ayarlar.
 
-Boolean Options
+Boolean Ayarlar
 ---------------
 
-Run the following command:
+Şu komutu çalıştırın:
 
     :::vim
     :set number
@@ -17,38 +17,41 @@ Run the following command:
 Line numbers should appear on the left side of the window if they weren't there
 already.  Now run this:
 
+Daha önceden satır sayıları açık değilse ekranın solunda belirmiş olmalı. Şimdi
+de şunu çalıştırın.
+
     :::vim
     :set nonumber
 
-The line numbers should disappear.  `number` is a boolean option: it can be off
-or on.  You turn it "on" by running `:set number` and "off" with `:set
-nonumber`.
+Satır sayıları kaybolmuş olmalı. `number` ayarı bir boolean ayardır: yani ya
+açık olabilir ya da kapalı. Açık olarak ayarlamak için `:set number` komutunu
+ve kapalı olarak ayarlamak için `:set nonumber` komutunu çalıştırabilirsiniz.
 
-All boolean options work this way.  `:set <name>` turns the option on and `:set
-no<name>` turns it off.
+Tüm boolean ayarları benzer şekilde çalışır. Açmak için `:set <isim>` ve kapatmak için `:set no<isim>`.
 
-Toggling Boolean Options
-------------------------
+Boolean Ayarları Arasında Geçiş Yapmak
+--------------------------------------
 
-You can also "toggle" boolean options to set them to the *opposite* of whatever
-they are now.  Run this:
-
-    :::vim
-    :set number!
-
-The line numbers should reappear.  Now run it again:
+Boolean ayarları kullanırken ayarlar arasında tam tersine geçiş de
+yapabilirsiniz. Yani açıksa kapalı kapalıysa açık olarak ayarlamak için şu
+komutu kullanın.
 
     :::vim
     :set number!
 
-They should disappear once more.  Adding a `!` (exclamation point or "bang") to
-a boolean option toggles it.
+Satır sayıları yeniden gözükecektir. Şimdi tekrar aynı komutu çalıştırın.
 
-Checking Options
-----------------
+    :::vim
+    :set number!
 
-You can ask Vim what an option is currently set to by using a `?`.  Run these
-commands and watch what happens after each:
+Bir kez daha kaybolacaklar. `!` (ünlem işareti ya da "bang")karakterini bir
+boolean ayarın sonuna eklemek onu geçişli bir hale sokar
+
+Ayarları Kontrol Etmek
+----------------------
+
+Vim'e şu an o ayarın neye kurulu olduğunu sormak için ayarın sonuna `?`
+eklenir. Şu komutları çalıştırın ve ne olduğuna dikkat edin.
 
     :::vim
     :set number
@@ -56,14 +59,14 @@ commands and watch what happens after each:
     :set nonumber
     :set number?
 
-Notice how the first `:set number?` command displayed `number` while the second
-displayed `nonumber`.
+Nasıl ilk `:set number?` komutunun `number` ikincininse `nonumber` gösterdiğine
+dikkat edin.
 
-Options with Values
--------------------
+Değerli Ayarlar
+---------------
 
-Some options take a value instead of just being off or on.  Run the following
-commands and watch what happens after each:
+Bazı ayarlar açık ya da kapalı olmak yerine değer alırlar. Şu komutları
+çalıştırın ve her seferinden neler olduğuna dikkat edin:
 
     :::vim
     :set number
@@ -71,43 +74,45 @@ commands and watch what happens after each:
     :set numberwidth=4
     :set numberwidth?
 
-The `numberwidth` option changes how wide the column containing line numbers
-will be.  You can change non-boolean options with `:set <name>=<value>`, and
-check them the usual way (`:set <name>?`).
+`numberwidth` ayarı satır sayılarını gösteren sütunun ne kadar geniş olduğunu
+belirler. Boolean ayarları `:set <isim>=<değer>` kullanarak değiştirebilir ve
+yine aynı önceki yolu kullanarak içeriğini kontrol edebilirsiniz (`:set
+<isim>?`)
 
-Try checking what a few other common options are set to:
+Şu çok kullanılan ayarların nelere kurulu olduğunu kontrol edin:
 
     :::vim
     :set wrap?
     :set shiftround?
     :set matchtime?
 
-Setting Multiple Options at Once
---------------------------------
+Birkaç Ayarı Birden Kurmak
+--------------------------
 
-Finally, you can specify more than one option in the same `:set` command to save
-on some typing.  Try running this:
+Birden fazla ayarı aynı `:set` komutu içerisinde yazarak aynı komutu durmadan
+yazmaktan kurtulabilirsiniz. Şunu çalıştırmayı deneyin:
 
     :::vim
     :set numberwidth=2
     :set nonumber
     :set number numberwidth=6
 
-Notice how both options were set and took effect in the last command.
+Nasıl iki ayarın da kurulup etki gösterdiğine dikkat edin.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Read `:help 'number'` (notice the quotes).
+`:help 'number'` (tırnak işaretlerini gözden kaçırmayın) sayfasını oku.
 
-Read `:help relativenumber`.
+`:help relativenumber` sayfasını oku.
 
-Read `:help numberwidth`.
+`:help numberwidth` sayfasını oku.
 
-Read `:help wrap`.
+`:help wrap` sayfasını oku.
 
-Read `:help shiftround`.
+`:help shiftround` sayfasını oku.
 
-Read `:help matchtime`.
+`:help matchtime` sayfasını oku.
 
-Add a few lines to your `~/.vimrc` file to set these options however you like.
+Bu ayarları kendinize göre ayarlamak için `~/.vimrc` dosyanıza birkaç satır
+ekleyin.
