@@ -1,107 +1,109 @@
-Modal Mapping
-=============
+Kip Eşlemeleri
+==============
 
-In the last chapter we talked about how to map keys in Vim.  We used the `map`
-command which made the keys work in normal mode.  If you played around a bit
-before moving on to this chapter, you may have noticed that the mappings also
-took effect in visual mode.
+Geçen bölümde Vim'de nasıl tuş eşlenir hakkında konuşmuştuk. Bunun için
+tuşların normal modda çalışmasını sağlamak için `map` komutunu kullanmıştık.
+Eğer ki bu bölüme gelmeden Vim ile biraz uğraşmışsanız bu eşlemelerin
+komutların visual modda da çalıştığını fark etmişsinizdir.
 
-You can be more specific about when you want mappings to apply by using `nmap`,
-`vmap`, and `imap`.  These tell Vim to only use the mapping in normal, visual,
-or insert mode respectively.
+`nmap`, `vmap` ve `imap` kullanarak hangi modda kullanmak istediğimizi
+belirleyebiliriz. Bunlar sırasıyla "normal", "visual" ve "insert" modda
+çalışmasını sağlar.
 
-Run this command:
+Bu komutu çalıştırın.
 
     :::vim
     :nmap \ dd
 
-Now put your cursor in your text file, make sure you're in normal mode, and
-press `\`.  Vim will delete the current line.
+Imlecinizi metin dosyasının üzerine getirin ve normal modda olduğunuza emin
+olun ve `\` tuşuna basın. Vim üzerinde bulunduğunuz satırı silecek.
 
-Now enter visual mode and try pressing `\`.  Nothing will happen, because we
-told Vim to only use that mapping in normal mode (and `\` doesn't do anything by
-default).
+Şimdi visual moda girin ve `\` tuşuna basın. Hiçbir şey olmayacak çünkü Vim'e
+bu eşlemenin sadece normal modda kullanmasını söyledik (ve `\` normalde hiçbir
+şey yapmaz).
 
-Run this command:
+Bu komutu çalıştırın:
 
     :::vim
     :vmap \ U
 
-Enter visual mode and select some text, then press `\`.  Vim will convert the
-text to uppercase!
+Visual moda girin ve biraz yazı seçin daha sonra `\` tuşuna basın. Vim yazıyı
+büyük harfli haline çevirecek!
 
-Try the `\` key a few times in normal and visual modes and notice that it now
-does something completely different depending on which mode you're in.
+Normal ve Visual modda `\` tuşunu birkaç kez deneyin ve hangi modda olduğuna
+göre nasıl tamamen farklı şeyler yaptığını görün.
 
-Muscle Memory
--------------
+Kas Hafızası
+------------
 
-At first the idea of mapping the same key to do different things depending on
-which mode you're in may sound like a terrible idea.  Why would you want to
-have to stop and think which mode you're in before pressing the key?  Wouldn't
-that negate any time you save from the mapping itself?
+Ilk başta hangi modda olduğunuza göre aynı eşlemenin farklı işler yapması
+inanılmaz kötü bir fikir gibi gelebilir. Neden tuşa basmadan önce hangi modda
+olduğunuzu düşünmek için neden zaman harcayasınız? Bu o eşlemeden kazandığınız
+tüm zamanın boşa gitmesini sağlamaz mı?
 
-In practice it turns out that this isn't really a problem.  Once you start using
-Vim often you won't be thinking about the individual keys you're typing any
-more.  You'll think: "delete a line" and not "press `dd`".  Your fingers and
-brain will learn your mappings and the keys themselves will become subconscious.
+Pratikte bu hiç de büyük bir problem değil. Bir kez Vim'i çokça kullanmaya
+başladığınızda tuşlarla düşünmeyeceksiniz artık. "`dd` tuşuna bas" değil "bir
+satır sil" diye düşüneceksiniz. Beyniniz ve parmaklarınız eşlemelerinizi ve
+tuşların kendisini kendi kendine öğrenecek ve bilinçaltınızdan kullandığınız
+bir şey olacak.
 
-Insert Mode
+Insert Modu
 -----------
 
-Now that we've covered how to map keys in normal and visual mode, let's move on
-to insert mode.  Run this command:
+Normal ve Visual modlarda nasıl tuş eşleyeceğimizi öğrendiğimize göre artık
+insert moda geçelim. Şu komutu çalıştırın:
 
     :::vim
     :imap <c-d> dd
 
-You might think that this would let you press `Ctrl+d` whenever you're in insert
-mode to delete the current line.  This would be handy because you wouldn't need
-to go back into normal mode to cut out lines.
+Bunun insert moddayken `Ctrl+d` tuşuna bastığınızda üzerinde bulunduğunuz
+satırı silmenizi sağladığını düşünüyor olabilirsiniz. Bu gerçekten kullanışlı
+olurdu, bir satırı silmek istediğinizde normal moda girmeniz gerekmezdi.
 
-Go ahead and try it.  It won't work -- instead it will just put two `d`s in your
-file!  That's pretty useless.
+Şimdi deneyin. Ama çalışmayacak -- onun yerine iki tane `d` harfi koyacak
+bulunduğunuz dosyaya ve bu hiç de kullanışlı değil.
 
-The problem is that Vim is doing exactly what we told it to.  We said: "when
-I press `<c-d>` I want you to do what pressing `d` and `d` would normally do".
-Well, normally when you're in insert mode and press the `d` key twice, you get
-two `d`s in a row!
+Problem Vim'in tam da istediğimiz şeyi yapması. Biz "Ben `<c-d>` tuşuna
+bastığımda `d` ve `d` tuşlarına bas ve normalde başka ne yapıyorsan onu yap".
+Ve insert moddayken iki kez `d` tuşuna basarsanız iki tane `d` eklemiş
+olursunuz.
 
-To make this mapping do what we intended we need to be very explicit.  Run this
-command to change the mapping:
+Tam olarak istediğimizi almak için çok açık olmalıyız. Eşlemeyi değiştirmek
+ve yeni eşlemeyi kullanmak için şu komutu kullanın:
 
     :::vim
     :imap <c-d> <esc>dd
 
-The `<esc>` is our way of telling Vim to press the Escape key, which will take
-us out of insert mode.
+`<esc>` Vim'e bizim Escape tuşunu kullanmak istediğimizi söyler, ki bu da bizi
+insert moddan normal moda alır.
 
-Now try the mapping.  It works, but notice how you're now back in normal mode.
-This makes sense because we told Vim that `<c-d>` should exit insert mode and
-delete a line, but we never told it to go back into insert mode.
+Şimdi eşlemeyi kullanın. Çalışıyor ama fark ettiyseniz artık normal moddayız.
+Bu mantıklı çünkü Vim'e `<c-d>` tuşlarına bastığımızda insert modundan
+çıkmasını ve bir satır silmesini söyledik ama tekrar insert moduna girmesini
+söylemedik.
 
-Run one more command to fix the mapping once and for all:
+Bunu son bir kez düzeltmek için bu komutu çalıştırın:
 
     :::vim
     :imap <c-d> <esc>ddi
 
-The `i` at the end enters insert mode, and our mapping is finally complete.
+Sondaki `i` insert moduna girmemizi sağlar ve eşlememiz sonuna bitti.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Set up a mapping so that you can press `<c-u>` to convert the current word to
-uppercase when you're in insert mode.  Remember that `U` in visual mode will
-uppercase the selection.  I find this mapping extremely useful when I'm writing
-out the name of a long constant like `MAX_CONNECTIONS_ALLOWED`.  I type out the
-constant in lower case and then uppercase it with the mapping instead of holding
-shift the entire time.
+Insert moddayken `<c-u>` tuşuna bastığınızda üzerinde bulunduğunuz kelimeyi
+büyük harflere çevirecek bir eşleme yapın. `U` tuşunun Visual modda seçilen
+yazıyı büyük harfe çevirdiğini unutmayın. Bu uzun `MAX_CONNECTIONS_ALLOWED`
+gibi uzun constant isimleri yazarken bu eşleme gerçekten işime yarar. Her
+seferinden Shift tuşuna basmaktansa önce constant'ı küçük harflerle yazar daha
+sonra büyük harflere çeviririm.
 
-Add that mapping to your `~/.vimrc` file.
+Bu eşlemeyi `~/.vimrc` dosyanıza ekleyin.
 
-Set up a mapping so that you can uppercase the current word with `<c-u>` when in
-*normal* mode.  This will be slightly different than the previous mapping
-because you don't need to enter normal mode.  You should end up back in normal
-mode at the end instead of in insert mode as well.
+Normal moddayken üzerinde bulunduğunuz kelimeyi `<c-u>` büyük harflere
+çevirecek bir eşleme yazın. Bu önceki eşlemeden biraz farklı olacak çünkü
+normal moda girmeniz gerekmeyecek. Ve en sonunda insert mod yerine tekrar
+normal modda olmanız gerekecek.
 
-Add that mapping to your `~/.vimrc` file.
+Bu eşlemeyi `~/.vimrc` dosyanıza ekleyin.
