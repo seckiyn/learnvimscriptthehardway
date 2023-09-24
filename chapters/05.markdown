@@ -1,118 +1,123 @@
-Strict Mapping
-==============
+Sıkı Eşleme
+===========
 
-Get ready, because things are about to get a little wild.
+Hazır olun çünkü işler biraz değişmeye başlayacak.
 
-So far we've used `map`, `nmap`, `vmap`, and `imap` to create key mappings that
-will save time.  These work, but they have a downside.  Run the following
-commands:
+Şimdiye kadar eşleme yapmak için `map`, `nmap`, `vmap` ve `imap` komutlarını
+kullandık. Bu komutlar çalışır ancak bir eksi yanları var. Şu komutları
+çalıştırın:
 
     :::vim
     :nmap - dd
     :nmap \ -
 
-Now try pressing `\` (in normal mode).  What happens?
+Şimdi `\` tuşuna basın (normal modda). Ne oldu?
 
-When you press `\` Vim sees the mapping and says "I should run `-` instead".
-But we've already mapped `-` to do something else!  Vim sees that and says "oh,
-now I need to run `dd`", and so it deletes the current line.
+Vim `\` tuşunu gördüğünde "Hmm şimdi `-` tuşunu kullanmalıyım" diyor. Ama biz
+`-` tuşunu çoktan farklı bir şey yapması için eşledik. Vim bunu görüyor "Aaa,
+şimdi benim `dd` komutunu çalıştırmam lazım" diyor ve üzerinde bulunduğunuz
+satırı siliyor.
 
-When you map keys with these commands Vim will take *other* mappings into
-account.  This may sound like a good thing at first but in reality it's pure
-evil.  Let's talk about why, but first remove those mappings by running the
-following commands:
+Bu komutlarla eşleme yaptığınızda Vim halihazırda tanımlanmış *tüm* eşlemeleri
+de dikkate alır. Başta iyi bir şey gibi gelebilir ama bu kötülüğün kendisidir.
+Hadi neden olduğunu konuşalım ama ondan önce bu yaptığımız eşlemeleri şu
+komutları kullanarak sıfırlayalım:
 
     :::vim
     :nunmap -
     :nunmap \
 
-Recursion
+Yineleme(Recursion)
 ---------
 
-Run this command:
+Bu komutu çalıştırın.
 
     :::vim
     :nmap dd O<esc>jddk
 
-At first glance it might look like this would map `dd` to:
+Ilk bakışta bunun `dd`yi şuna eşlediğini düşünürüz:
 
-* Open a new line above this one.
-* Exit insert mode.
-* Move back down.
-* Delete the current line.
-* Move up to the blank line just created.
+* Bu satırın üzerinde yeni bir satır oluştur.
+* Insert modundan çık.
+* Aşağı doğru hareket yap.
+* Şu anki satırı sil.
+* Üzerinden yarattığımız boş satıra git.
 
-Effectively this should "clear the current line".  Try it.
+Düşününce bunun "şu anki satırı temizle" görevi görmesi lazım. Deneyelim.
 
-Vim will seem to freeze when you press `dd`.  If you press `<c-c>` you'll get
-Vim back, but there will be a ton of empty lines in your file!  What happened?
+Vim siz `dd` tuşuna basar basmaz donacak. Eğer `<c-c>` tuşlarına basarsanız Vim
+eski haline döner ancak sayfanızda bir ton boş satır olduğunu göreceksiniz. Ne
+oldu?
 
-This mapping is actually *recursive*!  When you press `dd`, Vim says:
+Bu eşleme aslında *yinelemeli*! `dd` tuşuna bastığınızda Vim şöyle düşünür:
 
-* `dd` is mapped, so perform the mapping.
-    * Open a line.
-    * Exit insert mode.
-    * Move down a line.
-    * `dd` is mapped, so perform the mapping.
-        * Open a line.
-        * Exit insert mode.
-        * Move down a line.
-        * `dd` is mapped, so perform the mapping, and so on.
+* `dd` eşlenmiş demek ki şu eşlemeyi yap.
+    * Yeni bir satır aç.
+    * Insert modundan çık.
+    * Bir satır aşağı in.
+    * `dd` eşlenmiş demek ki şu eşlemeyi yap.
+        * Yeni bir satır aç.
+        * Insert modundan çık.
+        * Bir satır aşağı in.
+        * `dd` eşlenmiş demek ki şu eşlemeyi yap.
 
-This mapping can never finish running!  Go ahead and remove this terrible thing
-with the following command:
+Bu durumda eşleme asla bitmez! Şimdi gidip bu korkunç şeyi şu komutlar silin:
 
     :::vim
     :nunmap dd
 
-Side Effects
-------------
+Yan Etkiler
+-----------
 
-One downside of the `*map` commands is the danger of recursing.  Another is that
-their behavior can change if you install a plugin that maps keys they depend on.
+`*map`'lerin bir kötü tarafı da yineleme tehlikesidir. Bir diğer kötü tarafı da
+eşlemenin kullandığı tuşları kullanan bir plugin yüklediğinizde davranışlarının
+değişebilme tehlikesidir.
 
-When you install a new Vim plugin there's a good chance that you won't use and
-memorize every mapping it creates.  Even if you do, you'd have to go back and
-look through your `~/.vimrc` file to make sure none of your custom mappings use
-a key that the plugin has mapped.
+Yeni bir plugin yüklediğinizde büyük ihtimalle gidip tüm tuşlarını kullanıp,
+ezberlemeyeceksiniz. Ezberleseniz bile `~/.vimrc` dosyanıza her seferinde dönüp
+teker teker kullandığınız bir eşleme ile çakışıp çakışmadığına bakmanız
+gerekecek.
 
-This would make installing plugins tedious and error-prone.  There must be
-a better way.
+Bu plugin yüklemeyi gereksiz zor ve kolayca yanlış yapılmaya açık hale getirir.
+Bunun daha iyi bir yolu olmalı.
 
-Nonrecursive Mapping
---------------------
+Yinelemesiz(Nonrecursive) Eşleme
+--------------------------------
 
 Vim offers another set of mapping commands that will *not* take mappings into
 account when they perform their actions.  Run these commands:
+
+Vim size eşleme yaptığınızda diğer eşlemeleri göz önüne *almayacak* bir dizi
+eşleme komutları verir. Şu komutları çalıştırın.
 
     :::vim
     :nmap x dd
     :nnoremap \ x
 
-Now press `\` and see what happens.
+Şimdi `\` tuşuna basın ve ne olduğunu görün.
 
-When you press `\` Vim ignores the `x` mapping and does whatever it would do for
-`x` by default.  Instead of deleting the current line, it deletes the current
-character.
+`\` tuşuna bastığınızda Vim `x` eşlemesini görmezden gelir ve normalde `x` ne
+yapıyorsa onu yapar. Şu anki satırı silmek yerine üzerinde bulunduğu karakteri
+siler.
 
-Each of the `*map` commands has a `*noremap` counterpart that ignores other
-mappings: `noremap`, `nnoremap`, `vnoremap`, and `inoremap`.
+Her `*map` komutu için bir `*noremap` karşılığı vardır: `noremap`, `nnoremap`,
+`vnoremap` ve `inoremap`.
 
-When should you use these nonrecursive variants instead of their normal
-counterparts?
+Peki ne zaman normal versiyonları yerine yinelemesiz versiyonlarını kullanmanız
+gerek?
 
-**Always.**
+**HER ZAMAN.**
 
-**No, seriously, *always*.**
+**Hayır, şakası yok, *her zaman*.**
 
-Using a bare `*map` is just *asking* for pain down the road when you install
-a plugin or add a new custom mapping.  Save yourself the trouble and type the
-extra characters to make sure it never happens.
+Normal bir `*map` kullanmak bir plugin veya yeni bir eşleme eklemek
+istediğinizde hataya davetiye çıkarmak demek. Fazlada 4 karakter ekleyerek
+kendinizi bu beladan kurtarabilirsiniz.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Convert all the mappings you added to your `~/.vimrc` file in the previous
-chapters to their nonrecursive counterparts.
+`~/.vimrc` dosyanıza bugüne kadar eklediğiniz tüm eşlemeleri yinelemeli
+versiyonlarından yinelemesiz karşılıklarına çevirin.
 
-Read `:help unmap`.
+`:help unmap` sayfasını oku.
