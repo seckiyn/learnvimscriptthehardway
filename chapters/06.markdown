@@ -1,106 +1,111 @@
-Leaders
-=======
+Liderler
+========
 
-We've learned how to map keys in a way that won't make us want to tear our hair
-out later, but you might have noticed one more problem.
+Şimdiye kadar daha sonra başımızı yolmadan nasıl eşleme yapılır onu öğrendik
+ama bir problem fark etmiş olabilirsiniz.
 
-Every time we do something like `:nnoremap <space> dd` we've overwritten what
-`<space>` normally does.  What if we need that key later?
+Ne zaman ki `:nnoremap <space> dd` gibi bir eşleme yapsak `<space>` tuşunun
+işlevini yok ediyoruz. Peki ya daha sonradan o tuşa ihtiyacımız olursa ne
+yapacağız?
 
-There are a bunch of keys that you don't normally need in your day-to-day Vim
-usage.  `-`, `H`, `L`, `<space>`, `<cr>`, and `<bs>` do things that you almost
-never need (in normal mode, of course).  Depending on how you work you may find
-others that you never use.
+Günlük Vim kullanırken bir sürü ihtiyacınız olmayan tuş var. `-`, `H`, `L`,
+`<space>`, `<cr>` ve `<bs>` tuşlarına neredeyse asla ihtiyacımız olmayacak
+(normal modda tabii). Yaptığınız işle değişir olarak diğer bir sürü tuş da
+sizin için gereksiz olabilir.
 
-Those are safe to map, but that only gives us six keys to work with.  What
-happened to Vim's legendary customizability?
+Bunlar eşlemek için uygun ancak bize sadece 6 tane tuş kalmış oluyor. Hani
+nerede Vim'in efsanelere konu olan modifiye özelliği?
 
-Mapping Key Sequences
----------------------
+Tuş Dizilerine Eşlemek
+----------------------
 
-Unlike Emacs, Vim makes it easy to map more than just single keys.  Run these
-commands:
+Emacs'ten farklı olarak Vim birden fazla tuşa eşlemeyi kolay kılar. Şu
+komutları çalıştırın.
 
     :::vim
     :nnoremap -d dd
     :nnoremap -c ddO
 
-Try them out by typing `-d` and `-c` (quickly) in normal mode.  The first
-creates a custom mapping to delete a line, while the second "clears" a line and
-puts you into insert mode.
+Normal modda `-d` ve `-c` tuşlarına basarak (hızlıca) deneyin. Ilk yaptığımız
+satır silmek için bir eşlemeyken, diğeri üzerinde bulunduğunuz satırı
+"temizler" ve sizi insert moda sokar.
 
-This means you can pick a key that you don't care about (like `-`) as a "prefix"
-key and create mappings on top of it.  It means you'll have to type an extra key
-to activate the mappings, but one extra keystroke can easily be absorbed into
-muscle memory.
+Bunun anlamı size gerekli olmayan herhangi bir tuşu (`-` gibi) "ön ek" yaparak
+üzerine istediğiniz eşlemeleri inşa edebilirsiniz. Eşlemelerinizi kullanmak
+için fazladan bir tuşa basmanız gerekecek ama tek bir tuş kolayca kas
+hafızasına işlenebilir.
 
-If you think this might be a good idea, you're right, and it turns out that Vim
-already has mechanisms for this "prefix" key!
+Eğer ki bunun dahice bir fikir olduğunu düşünüyorsanız, haklısınız ve Vim
+halihazırda size "ön ek" tuşu için özellikler sunuyor.
 
-Leader
-------
+Lider
+-----
 
-Vim calls this "prefix" key the "leader".  You can set your leader key to
-whatever you like.  Run this command:
+Vim bizim "ön ek" dediğimiz tuşa "lider" diyor. Lider tuşunu istediğiniz bir
+tuşa eşleyebilirsiniz. Şu komutu çalıştırın.
 
     :::vim
     :let mapleader = "-"
 
-You can replace `-` with any key you like.  I personally like `,` even though it
-shadows a useful function, because it's very easy to type.
+`-` tuşunu istediğiniz bir tuşla değiştirebilirsiniz. Ben şahsen `,` tuşunu
+seviyorum her ne kadar kullanışlı bir özelliği kapatsa bile çünkü kolayca
+erişilebilir bir yerde.
 
-When you're creating new mappings you can use `<leader>` to mean "whatever
-I have my leader key set to".  Run this command:
+Ne zaman yeni bir eşleme yapacağınızda o daha önceden belirlediğiniz tuşa eş
+olan `<leader>` kullanabilirsiniz. Şu komutu çalıştırın.
 
     :::vim
     :nnoremap <leader>d dd
 
-Now try it out by pressing your leader key and then `d`.  Vim will delete the
-current line.
+Şimdi lider tuşunuza basına ardından da `d` tuşuna. Vim üzerinde bulunduğunuz
+satırı silecek.
 
-Why bother with setting `<leader>` at all, though?  Why not just include your
-"prefix" key directly in your mapping commands?  There are three good reasons.
+Neden `<leader>` gibi bir şeyi ayarlamakla uğraşıyoruz? Neden doğrudan
+belirlediğimiz "ön ek"i kullanmıyoruz eşleme yaparken? Üç tane iyi sebebi var
+bunun.
 
-First of all, you may decide you need the normal function of your leader later
-on down the road.  Defining it in one place makes it easy to change later.
+Her şeyden önce kullandığınız tuşun normal işlevine ihtiyacınız olabilir
+ileride. Onu tek bir yerde tanımlamak daha sonra değiştirmeyi çok daha kolay
+hale getiriyor.
 
-Second, when someone else is looking at your `~/.vimrc` file they'll immediately
-know what you mean when you say `<leader>`.  They can simply copy your mapping
-into their own `~/.vimrc` if they like it even if they use a different leader.
+Ikincisi başka birinin `~/.vimrc` dosyasına baktığınızda `<leader>`i görür
+görmez ne olduğunu anlayabileceksiniz. Böylece hiç uğraşmadan onların
+eşlemelerini kendi `~/.vimrc` dosyanıza kopyalayabilirsiniz.
 
-Finally, many Vim plugins create mappings that start with `<leader>`.  If you've
-already got it set up they'll work properly and will feel familiar right out of
-the box.
+Ve son olarak bir sürü Vim plugini `<leader>` ile başlayan eşlemeler yapıyor.
+Önceden ayarlıysa kurar kurmaz pluginleri kullanabilirsiniz.
 
-Local Leader
-------------
+Yerel Lider
+-----------
 
-Vim has a second "leader" key called "local leader".  This is meant to be
-a prefix for mappings that only take effect for certain types of files, like
-Python files or HTML files.
+Vim'in "yerel lider (local leader)" isimli ikinci bir "lider" tuşu var. Bu
+önceden sadece belli dosya tipleri altında işe yarayan "ön ekler" anlamına
+gelirdi, Python dosyaları veya HTML dosyaları.
 
-We'll talk about how to make mappings for specific types of files later in the
-book, but you can go ahead and set your "localleader" now:
+Eşlemelerin ileride nasıl farklı tipler için farklı olabileceğini göstereceğiz.
+Ama şimdilik şu komutla "localleader" yani yerel liderinizi seçebilirsiniz.
 
     :::vim
     :let maplocalleader = "\\"
 
-Notice that we have to use `\\` and not just `\` because `\` is the escape
-character in Vimscript strings.  You'll learn more about this later.
+Şuna dikkat edin sadece `\` yerine `\\` kullandık çünkü Vimscript yazılarında
+`\` bir kaçış karakteridir. Bunun hakkında daha sonra daha çok öğreneceğiz.
 
-Now you can use `<localleader>` in mappings and it will work just like
-`<leader>` does (except for resolving to a different key, of course).
+Şimdi `<localleader>` kullanarak eşleme yapabilirsiniz ve aynı `<leader>` gibi
+çalışacak. (tabii ki farklı tuşlara mukabil gelecekler)
 
-Feel free to change this key to something else if you don't like backslash.
+Eğer ki ters eğik çizgiyi beğenmediyseniz bu tuşu gönlünüze göre değiştirmeyi
+unutmayın.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Read `:help mapleader`.
+`:help mapleader` sayfasını oku.
 
-Read `:help maplocalleader`.
+`:help maplocalleader` sayfasını oku.
 
-Set `mapleader` and `maplocalleader` in your `~/.vimrc` file.
+`mapleader` ve `maplocalleader` tuşlarınızı `~/.vimrc` dosyanızda ayarlayın.
 
-Convert all the mappings you added to your `~/.vimrc` file in the previous
-chapters to be prefixed with `<leader>` so they don't shadow existing commands.
+Daha önceki bölümlerde ayarladığınız `~/.vimrc` dosyanızdaki eşlemeleri
+`<leader>` ile ön eklenmiş olarak ayarlayın böylece tuşların gerçek işlevlerini
+gölgelemesinler.
