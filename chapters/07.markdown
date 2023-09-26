@@ -1,86 +1,88 @@
-Editing Your Vimrc
-==================
+~/.vimrc Dosyanızı Düzenlemek
+=============================
 
-Before we move on to learning more Vimscript, let's find a way to make it easier
-to add new mappings to our `~/.vimrc` file.
+Ilerleyip daha fazla Vimscript öğrenmeden önce `~/.vimrc` dosyamıza yeni
+eşlemeler yapmayı kendimiz için daha kolay hale getirmemiz lazım.
 
-Sometimes you're coding away furiously at a problem and realize a new mapping
-would make your editing easier.  You should add it to your `~/.vimrc` file right
-then and there to make sure you don't forget, but you *don't* want to lose your
-concentration.
+Bazen delice kod yazarken yeni bir eşlemeye ihtiyacınız olduğunu ve onun
+işinizi çok daha hızlı hale getirebileceğini anlayabilirsiniz. Hemen onu
+unutmadan `~/.vimrc` dosyanıza eklemeniz lazım ama konsantrasyonunuzu da
+kaybetmek istemiyorsunuz.
 
-The idea of this chapter is that you want to make it easier to make it easier to
-edit text.
+Bu bölümün amacı yazı düzenlemenizi daha kolay hale getirmeyi nasıl daha kolay
+hale getirirsiniz.
 
-That's not a typo.  Read it again.
+Evet bu yazım yanlışı değildi, tekrar okuyun.
 
-The idea of this chapter is that you want to (make it easier to (make it easier
-to (edit text))).
+Bu bölümün amacı sizi (yazı düzenlemeyi kolay hale getirmeyi (nasıl daha kolay
+hale getirirsiniz))
 
-Editing Mapping
----------------
+Eşlemeyi Düzenlemek
+-------------------
 
-Let's add a mapping that will open your `~/.vimrc` file in a split so you can
-quickly edit it and get back to coding.  Run this command:
+Hadi `~/.vimrc` dosyanızı ayrı bir ekranda açıp düzenlemenizi ve kolayca
+kodlamaya dönebileceğiniz bir eşleme ekleyelim.
 
     :::vim
     :nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
-I like to think of this command as "**e**dit my **v**imrc file".
+Ben bunu "**e**dit my **v**imrc file" olarak düşünüyorum.
 
-`$MYVIMRC` is a special Vim variable that points to your `~/.vimrc` file.  Don't
-worry about that for right now, just trust me that it works.
+`$MYVIMRC` Vim içinde sizin `~/.vimrc` dosyanızı gösteren özel bir değişkendir.
+Onu pek düşünmeyin şimdilik, sadece çalıştığı hakkında bana güvenin.
 
-`:vsplit` opens a new vertical split.  If you'd prefer a horizontal split you
-can replace it with `:split`.
+`:vsplit` komutu dikey bölünmüş bir ekran açar. Eğer ki yatay bölünmüş bir ekran daha çok hoşunuza gidiyorsa onu `hsplit` komutu ile değiştirebilirsiniz.
 
-Take a minute and think through that command in your mind.  The goal is: "open
-my `~/.vimrc` file in a new split".  Why does it work?  Why is every single
-piece of that mapping necessary?
+Bu komut hakkında biraz düşünün. Amaç: "benim `~/.vimrc` dosyamı yeni bölmede
+aç". Nasıl çalışıyor? Neden eşlemenin her parçası gerekli?
 
-With that mapping you can open up your `~/.vimrc` file with three keystrokes.
-Once you use it a few times it will burn its way into your muscle memory and
-take less than half a second to type.
+Bu eşleme sayesinde `~/.vimrc` dosyanızı üç tuş darbesi ile açabilirsiniz.
+Birkaç kez kullandıktan sonra kas hafızanıza yerleşecek ve yarım saniyeden kısa
+bir sürede tuşlayabileceksiniz.
 
-When you're in the middle of coding and come up with a new mapping that would
-save you time it's now trivial to add it to your `~/.vimrc` file.
+Kod yazmanın ortasındayken `~/.vimrc` dosyanıza yeni bir eşleme eklemeyi çok
+daha kolay bir hale getiriyor.
 
-Sourcing Mapping
-----------------
+Eşlemeleri Kaynaklamak(Sourcing)
+--------------------------------
 
-Once you've added a mapping to your `~/.vimrc` file, it doesn't immediately take
-effect.  Your `~/.vimrc` file is only read when you start Vim.  This means you
-need to also run the command manually to make it work in the current session,
-which is a pain.
+`~/.vimrc` dosyanıza yeni bir eşleme eklediğinizde hemen etki göstermezler.
+`~/.vimrc` dosyası sadece Vim'i açtığınızda çalışır. Bunun anlamı kendinizi
+tekrar edip kendiniz eklemeniz gerekiyor yeni eşlemeyi ki hiç de iyi bir şey
+değil.
 
-Let's add a mapping to make this easier:
+Hadi bunu da kolaylaştıracak bir eşleme ekleyelim:
 
     :::vim
     :nnoremap <leader>sv :source $MYVIMRC<cr>
 
-I like to think of this command as "**s**ource my **v**imrc file".
+Ben bunu "**s**ource my **v**imrc file" olarak düşünüyorum.
 
 The `source` command tells Vim to take the contents of the given file and
 execute it as Vimscript.
 
-Now you can easily add new mappings during the heat of coding:
+`source` komutu Vim'e bahsedilen dosyanın içeriğini okuyup onu Vimscript olarak
+çalıştırmasını söylüyor.
 
-* Use `<leader>ev` to open the file.
-* Add the mapping.
-* Use `:wq<cr>` (or `ZZ`) to write the file and close the split, bringing you
-  back to where you were.
-* Use `<leader>sv` to source the file and make our changes take effect.
+Artık delice kodlama yaparken şöyle yeni eşleme ekleyebilirsiniz:
 
-That's eight keystrokes plus whatever it takes to define the mapping.  It's very
-little overhead, which reduces the chance of breaking focus.
+* Dosyayı açmak için `<leader>ev` tuşlarını kullanın.
+* Eşlemeyi ekleyin.
+* `:wq<cr>` (ya da `ZZ`) komutunu kullanarak dosyayı kapatın ve eski dosyanıza
+  geri dönün.
+* `<leader>sv` tuşlarını kullanarak dosyayı kaynak edin ve eklediğiniz
+  çalışmaya başlasın.
 
-Exercises
----------
+Bu sekiz artı sizin ekleyeceğiniz eşleme kadar tuş gerektiriyor. Çok küçük bir
+yük ki böylece dikkati dağıtma şansını azaltıyor.
 
-Add mappings to "edit my `~/.vimrc`" and "source my `~/.vimrc`" to your
-`~/.vimrc` file.
+Egzersizler
+-----------
 
-Try them out a few times, adding dummy mappings each time.
+`~/.vimrc` düzenleme ve kaynaklama (edit source my `~/.vimrc` file)
+eşlemelerini `~/.vimrc` dosyanıza ekleyin
 
-Read `:help myvimrc`.
+Saçma sapan eşlemeler ekleyerek bu eşlemeleri deneyin.
+
+`:help myvimrc` sayfasını oku.
 
