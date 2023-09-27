@@ -1,129 +1,127 @@
-Abbreviations
+Kısaltmalar (Abbreviations)
 =============
 
-Vim has a feature called "abbreviations" that feel similar to mappings but are
-meant for use in insert, replace, and command modes.  They're extremely flexible
-and powerful, but we're just going to cover the most common uses here.
+Vim'in "kısaltmalar(abbreviatons)" denilen eşlemeye çok benzeyen ama sadece
+insert, replace ve command modlarında kullanılması amaçlanan bir özelliği daha
+var. Çok esnek ve güçlü şeylerdir bunlar ancak burada sadece en yaygın
+kullanımlarını göreceğiz burada.
 
-We're only going to worry about insert mode abbreviations in this book. Run the
-following command:
+Biz bu kitapta sadece insert modundaki kısaltmalar ile ilgileneceğiniz. Şu komutu çalıştırın.
 
     :::vim
     :iabbrev adn and
 
-Now enter insert mode and type:
+Şimdi insert moduna girin ve şunu tuşlayın.
 
     :::text
     One adn two.
 
-As soon as you hit space after typing the `adn` Vim will replace it with `and`.
+Siz `adn` yazısına bir boşluk koyduğunuz anda anda Vim yazıyı `and` olarak
+değiştirecek.
 
-Correcting typos like this is a great use for abbreviations.  Run these
-commands:
+Bu tip yazım yanlışlarını düzeltmek için kısaltmalar harika şeylerdir. Şu
+komutları çalıştırın:
 
     :::vim
     :iabbrev waht what
     :iabbrev tehn then
 
-Now enter insert mode again and type:
+Şimdi insert moduna girin ve şunları tuşlayın:
 
     :::text
     Well, I don't know waht we should do tehn.
 
-Notice how *both* abbreviations were substituted, even though you didn't type
-a space after the second one.
+Nasıl iki kısaltmanın da bahsettiğimiz kelimelerle değiştirildiğine dikkat
+edin, ikincisinden sonra boşluk koymasak bile.
 
-Keyword Characters
-------------------
+Keyword Karakterler
+-------------------
 
-Vim will substitute an abbreviation when you type any "non-keyword character"
-after an abbreviation.  "Non-keyword character" means any character not in the
-`iskeyword` option.  Run this command:
+Vim sonuna "keyword olmayan herhangi bir karakter    koyduğunuzda değiştirme
+işlemini gerçekleştirecektir. "Keyword olmayan karakter" ise `iskeyword`
+ayarında olmayan karakterler demektir.
 
     :::vim
     :set iskeyword?
 
-You should see something like `iskeyword=@,48-57,_,192-255`.  This format is
-very complicated, but in essence it means that all of the following are
-considered "keyword characters":
+`iskeyword=@,48-57,_,192-255` gibi bir dizi görmeniz lazım. Bu format çok
+karmaşıktır ama özünde şunlar "keyword" karakter olarak kabul edilir:
 
-* All alphabetic ASCII characters, both upper and lower case, and their accented
-  versions.
-* Any characters with an ASCII value between 48 and 57 (the digits zero through
-  nine).
-* The underscore character (`_`).
-* Any characters with an ASCII value between 192 and 255 (some special ASCII
-  characters).
+* Tüm ASCII karakterleri, hem büyük hem de küçük karakterler ve onların
+  modifiye edilmiş halleri (ö, ş, İ...gibi).
+* ASCII tablosunda 48 ve 57 arasındaki karakterler (sıfırdan dokuza rakam
+  karakterleri).
+* Alttan çizgi karakteri (`_`).
+* ASCII tablosunda değeri 192 ve 255 arasında olan karakterler (bazı özel ASCII
+  karakterleri)
 
-If you want to read the *full* description of this option's format you can check
-out `:help isfname`, but I'll warn you that you'd better have a beer at the
-ready for this one.
+Eğer ki bu formatın nasıl çalıştığı ile ilgili *tüm* bilgileri istiyorsanız
+`:help isfname` sayfasına göz atabilirsiniz ama önceden uyarayım kendinizi
+hazır tutun uzun bir yolculuk olacak.
 
-For our purposes you can simply remember that abbreviations will be expanded
-when you type anything that's not a letter, number, or underscore.
+Kolayca hatırlamak için ne zaman ki harf, rakam veya alttan çizgi olmayan bir
+tuşa basar basmaz kısaltmalar gerekli hallerine dönüştürülecekler.
 
-More Abbreviations
-------------------
+Daha Fazla Kısaltma
+-------------------
 
-Abbreviations are useful for more than just correcting typos.  Let's add a few
-more that can help in day-to-day text editing.  Run the following commands:
+Kısaltmalar yazım yanlışlarını düzeltmekten fazlasını yapabilirler. Hadi birkaç
+tane daha günlük kullanımda işimize yarayacak kısaltmalar ekleyelim. Şu
+komutları çalıştırın:
 
     :::vim
     :iabbrev @@    steve@stevelosh.com
     :iabbrev ccopy Copyright 2013 Steve Losh, all rights reserved.
 
-Feel free to replace my name and email address with your own, then enter insert
-mode and try them out.
+Benim ismim ve e-mail adresimizi sizinkiyle değiştirebilirsiniz, şimdi insert
+moduna girin ve bunları deneyin.
 
-These abbreviations take large chunks of text that you type often and compress
-them down to a few characters.  Over time, this can save you a lot of typing, as
-well as wear and tear on your fingers.
+Bu kısaltmalar büyük yazı parçalarını alıp genellikle kısaltıp birkaç karaktere
+sıkıştırabilirler. Zaman geçtikçe bu bir sürü zaman ve tuşlama kazandıracak ve
+aynı zamanda parmaklarınızı harap etmenizi önleyecek.
 
-Why Not Use Mappings?
----------------------
+Neden Sadece Eşleme Kullanmıyoruz?
+----------------------------------
 
-If you're thinking that abbreviations seem similar to mappings, you're right.
-However, they're intended to be used for different things.  Let's look at an
-example.
+Eğer ki kısaltmaların eşlemelere benzer olduğunu düşünüyorsanız, haklısınız. Ancak ikisi de farklı amaçlar için kullanılır. Hadi bir örneğe bakalım.
 
-Run this command:
+Şu komutu çalıştırın:
 
     :::vim
     :inoremap ssig -- <cr>Steve Losh<cr>steve@stevelosh.com
 
-This is a *mapping* intended to let you insert your signature quickly.  Try it
-out by entering insert mode and typing `ssig`.
+Bu eşleme sizin imzanızı kolayca koymanızı sağlamayı amaçlıyor. Şimdi onu
+insert moduna girerek ve `ssig` yazarak deneyin.
 
-It seems to work great, but there's a problem.  Try entering insert mode and
-typing this text:
+Çalışıyor gibi görünebilir ancak bir problem var. Şimdi insert moduna girin ve şu yazıyı yazmayı deneyin:
 
     :::text
     Larry Lessig wrote the book "Remix".
 
-You'll notice that Vim has expanded the `ssig` in Larry's name!  Mappings don't
-take into account what characters come before or after the map -- they only look
-at the specific sequence that you mapped to.
+Vim Larry'nin ismindeki `ssig` harflerini de çevirdi! Eşlemeler ondan önce ve
+sonra gelen karakterleri dikkate almazlar. Onlar sadece bir dizi karakter
+sırasıyla basılmış mı basılmamış mı onu kontrol ederler.
 
-Remove the mapping and replace it with an abbreviation by running the following
-commands:
+Şu komutu kullanarak bu eşlemeyi kaldıralım ve onu bir kısaltma ile
+değiştirelim:
 
     :::vim
     :iunmap ssig
     :iabbrev ssig -- <cr>Steve Losh<cr>steve@stevelosh.com
 
-Now try out the abbreviation again.
+Şimdi kısaltmayı tekrar deneyin.
 
-This time Vim will pay attention to the characters before and after `ssig` and
-only expand it when we want.
+Bu sefer Vim `ssig` harflerinden önce ve sonra gelen harflere dikkat edecek ve sadece biz istediğimizde dönüşümü yapacak.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Add abbreviations for some common typos you know you personally make to your
-`~/.vimrc` file.  Be sure to use the mappings you created in the last chapter to
-open and source the file!
+`~/.vimrc` dosyanıza çok yaptığınızı bildiğiniz yazım yanlışlarını düzeltmek
+amacıyla birkaç kısaltma ekleyin. `~/.vimrc` dosyasını açarken geçen bölümde
+hazırladığımız dosyayı düzenle ve dosyayı kaynakla eşlemelerini kullanmayı
+unutmayın.
 
-Add abbreviations for your own email address, website, and signature as well.
+Kendi e-mail adresiniz, siteniz ve imzanız için bir kısaltma ekleyin.
 
-Think of some pieces of text you type very often and add abbreviations for them
-too.
+Çok sıklıkla kullandığınız uzun yazıları düşünün ve onlar için kısaltma
+ekleyin.
