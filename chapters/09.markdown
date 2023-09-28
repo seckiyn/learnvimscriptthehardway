@@ -1,92 +1,96 @@
-More Mappings
-=============
+Daha Çok Eşleme
+===============
 
-I know we've talked a lot about mappings so far, but we're going to practice
-them again now.  Mappings are one of the easiest and fastest ways to make your
-Vim editing more productive so it's good to focus on them quite a bit.
+Eşlemeler hakkında çok konuştuğumuzu biliyorum ama bugün yine onlar hakkında
+olacak. Eşlemeler Vim ile düzenlemeyi üretken hale getiren en iyi yollardan
+birisi yani üzerinde uzun bir süre durmamız gerekiyor.
 
-One concept that has showed up in several examples but that we haven't
-explicitly talked about is mapping a sequence of multiple keys.
+Daha önce kitapta birkaç kez görünmesine rağmen konuşmadığımız bir şey var o da
+bir sizi tuşa birden eşleme yapmak.
 
-Run the following command:
+Şu komutu çalıştırın:
 
     :::vim
     :nnoremap jk dd
 
-Now make sure you're in normal mode and press `j` followed quickly by `k`.  Vim
-will delete the current line.
+Şimdi normal moda girip `j` tuşuna ve hemen ardından `k` tuşuna basın. Vim
+üzerinde bulunduğunuz satırı silecek.
 
-Now try pressing only `j` and waiting for a bit.  If you don't press `k` quickly
-after the `j`, Vim decides that you don't want to activate the mapping and
-instead runs the normal `j` functionality (moving down a line).
+Şimdi tekrar `j` tuşuna basın ve biraz bekleyin. Eğer `k` tuşuna `j` tuşunun
+ardından hızlıca basmadıysanız Vim o eşlemeyi kullanmayacağınıza karar veriyor
+ve `j` tuşu normalde ne yapıyorsa onu yapıyor (bir satır aşağı inmek)
 
-This mapping will make it painful to move around, so let's remove it.  Run the
-following command:
+Bu eşleme yazı dosyası üzerinde dolaşmayı bir eziyet haline getirecek o yüzden
+hadi gelin silelim. Şu komutu çalıştırın:
 
     :::vim
     :nunmap jk
 
-Now typing `jk` in normal mode will move down and then up a line as usual.
+Şimdi normal tekrar `jk` tuşlamayı deneyin normalde yaptığı gibi bir aşağı bir
+yukarı hareket edecek.
 
-A More Complicated Mapping
---------------------------
+Çok Daha Karışık Bir Eşleme
+---------------------------
 
-You've seen a bunch of simple mappings so far, so it's time to look at something
-with a bit more meat to it.  Run the following command:
+Şimdiye kadar bir sürü basit eşleme gördünüz artık biraz daha karmaşık bir şeye
+geçme vakti geldi. Şu komutu çalıştırın:
 
     :::vim
     :nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 
-Now *that's* an interesting mapping!  First, go ahead and try it out.  Enter
-normal mode, put your cursor over a word in your text and type `<leader>"`.  Vim
-will surround the word in double quotes!
+Işte bu ilgi çeken bir eşleme! Önce gidin ve deneyin. Normal moda girin,
+imlecinizi bir kelimenin üzerine getirin ve `<leader>"` tuşlayın. Vim kelimenin
+etrafını tırnak işaretleri ile donatır.
 
-How does this work?  Let's split it apart into pieces and think of what each one
-does:
+Bu nasıl çalışıyor? Hadi eşlemeyi parçalarına ayıralım ve her birinin ne
+yaptığına bakalım:
 
     :::text
     viw<esc>a"<esc>bi"<esc>lel
 
-* `viw`: visually select the current word
-* `<esc>`: exit visual mode, which leaves the cursor on the last character of
-  the word
-* `a`: enter insert mode *after* the current character
-* `"`: insert a `"` into the text, because we're in insert mode
-* `<esc>`: return to normal mode
-* `b`: move back to the beginning of the word
-* `i`: enter insert mode *before* the current character
-* `"`: insert a `"` into the text again
-* `<esc>`: return to normal mode
-* `l`: move right, which puts our cursor on the first character of the word
-* `e`: move to the end of the word
-* `l`: move right, which puts our cursor over the ending quote
+* `viw`: şu anki kelimeyi görsel olarak seç (visual inside word)
+* `<esc>`: görsel moddan çık ki imleci kelimenin son harfinde bırakır
+* `a`: insert moduna şu anki karakterin *ardından* geç. (after)
+* `"`: yazıya bir `"` ekle, çünkü şu an insert modundayız
+* `<esc>`: normal moda geri dön
+* `b`: geriye doğru kelimenin başına gir (back)
+* `i`: insert moduna şu anki karakterden *önce* gir.
+* `"`: tekrar insert modunda `"` ekle
+* `<esc>`: normal moda dön
+* `l`: sağa doğru git ki imleci kelimenin ilk harfine getirir
+* `e`: kelimenin sonuna git
+* `l`: sağa git ki bu imleci son tırnağın üzerine getirir
 
-Remember: because we used `nnoremap` instead of `nmap` it doesn't matter if
-you've mapped any of the keys in this sequence to something else.  Vim will use
-the default functionality for all of them.
+Unutmayın: burada `nmap` yerine `nnoremap` kullandık yani burada eşlerken
+kullandığımız dizilerden birini daha önce kullanmışsak bile etkisini
+göstermeyecek. Vim tüm tuşlar ve tuş dizileri için varsayılan işlevini
+kullanacak.
 
-Hopefully you can see how much potential Vim's mappings have, as well as how
-unreadable they can become.
+Umarım bunun ne kadar güçlü şeylere kapı açtığını ve aynı zamanda bu
+eşlemelerin okunaklıklarını ne kadar hızlı kaybedeceklerini görmüşsünüzdür.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Create a mapping similar to the one we just looked at, but for single quotes
-instead of double quotes.
+Yaptığımız eşlemeye benzer bir eşleme yapın ama çift tırnak yerine tek tırnak
+kullansın.
 
-Try using `vnoremap` to add a mapping that will wrap whatever text you have
-*visually selected* in quotes.  You'll probably need the `` `< `` and `` `> ``
-commands for this, so read up on them with `` :help `< ``.
+`vnoremap` komutunu kullanarak halihazırda seçtiğiniz tüm harfleri kapsayacak
+şekilde tırnak eklesin. Muhtemelen `` `< `` ve `` `> `` komutlarını kullanmak
+isteyebilirsiniz, onların yardım sayfasını `` :help `< `` kullanarak
+okuyun.
 
-Map `H` in normal mode to go to the beginning of the current line.  Since `h`
-moves left you can think of `H` as a "stronger" `h`.
+Normal modda `H` tuşunu şu anki satırın başına getirecek bir eşleme yapın.
+Normalde `h` tuşu sola götürür o yüzden `H` tuşunu "güçlü" `h` olarak
+düşünebilirsiniz.
 
-Map `L` in normal mode to go to the end of the current line. Since `l`
-moves right you can think of `L` as a "stronger" `l`.
+Normal modda `L` tuşunu şu anki satırın sonuna götürecek bir eşleme yapın.
+Normalde `l` tuşu sağa götürür o yüzden `L` tuşunu "güçlü" `l` olarak
+düşünebilirsiniz.
 
-Find out what commands you just overwrote by reading `:help H` and `:help L`.
-Decide whether you care about them.
+`:help H` ve `:help L` yardım sayfalarını okuyarak `H` ve `L` tuşlarını
+eşleyerek nelerin üzerine yazmışız onu görün.
 
-Add all of these mappings to your `~/.vimrc` file, making sure to use your "edit
-my `~/.vimrc`" and "source my `~/.vimrc`" mappings to do so.
-
+Tüm bu eşlemeleri `~/.vimrc` dosyanıza ekleyin.  `~/.vimrc` dosyasını açarken
+geçen bölümlerde hazırladığımız dosyayı düzenle ve dosyayı kaynakla
+eşlemelerini kullanmayı unutmayın.
