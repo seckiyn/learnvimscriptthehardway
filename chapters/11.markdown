@@ -1,123 +1,127 @@
-Buffer-Local Options and Mappings
-=================================
+Yerel Buffer Ayarları ve Eşlemeleri
+===================================
 
-Now we're going to take a few minutes to revisit three things we've already
-talked about: mappings, abbreviations, and options, but with a twist.  We're
-going to set each of them in a single buffer at a time.
+Şimdi birkaç dakikamızı ayırıp daha önceden gördüğümüz 3 şeyi ziyaret edeceğiz:
+eşlemeler, kısaltmalar ve ayarlar ama bir değişiklik ile. Her birini sadece bir
+buffer üzerine ayarlayacağız.
 
-The true power of this idea will become apparent in the next chapter, but we
-need to lay the groundwork for it now.
+Bu özelliğin gücü diğer bölümde belli olacak, şimdilik sadece temel olarak
+göreceğiz.
 
-For this chapter you'll need to open two files in Vim, each in its own split.
-I'll call them `foo` and `bar`, but you can name them whatever you like.  Put
-some text into each of them.
+Bu bölüm için Vim'de iki adet dosya açmanız lazım, ikisi de ayrı
+bölümde(`:split`). Ben isimlerini `foo` ve `bar` yapacağım ama siz istediğiniz
+ismi koyabilirsiniz. Ikisine de biraz yazı koyun.
 
-Mappings
---------
+Eşlemeler
+---------
 
-Switch to file `foo` and run the following commands:
+`foo` isimli dosyaya gelin ve şu komutları çalıştırın:
 
     :::vim
     :nnoremap          <leader>d dd
     :nnoremap <buffer> <leader>x dd
 
-Now stay in file `foo`, make sure you're in normal mode, and type `<leader>d`.
-Vim will delete a line.  This is nothing new.
+Şimdi `foo` dosyasında kalın ve normal modda olduğunuza emin olun ve
+`<leader>d` tuşlarına basın. Vim bir satırı silecek. Bu zaten bildiğimiz bir
+şey.
 
-Still in file `foo`, type `<leader>x`.  Vim will delete a line again.  This
-makes sense because we mapped `<leader>x` to `dd` as well.
+Hala `foo` dosyasındayken `<leader>x` tuşlarına basın. Vim yine bir satır
+silecek. Normal çünkü `<leader>x` tuşlarını da `dd` tuşlarına eşledik.
 
-Now move over to file `bar`.  While in normal mode, type `<leader>d`.  Again,
-Vim deletes the current line.  Nothing surprising here either.
+Şimdi `bar` dosyasına geçelim. Normal moddayken `<leader>d` tuşlarına basın.
+Tekrar, Vim üzerinde bulunduğunuz satırı silecek. Şaşırtıcı bir şey değil.
 
-Now for the twist: while still in file `bar`, type `<leader>x`.
+Şimdi sürprize gelelim: hala `bar` dosyasındayken `<leader>x` tuşlayın.
 
-Instead of deleting the entire line, Vim just deleted a single character!
-What happened?
+Tüm satırı silmek yerine Vim sadece bir karakter sildi! Ne oldu burada?
 
-The `<buffer>` in the second `nnoremap` command told Vim to only consider that
-mapping when we're in the buffer where we defined it.
+Ikinci `nnoremap` komutundaki `<buffer>` Vim'e sadece şu an onu tanımladığımız
+buffer içindeysek çalıştırmasını söyledi.
 
-When you typed `<leader>x` in file `bar` Vim couldn't find a mapping that
-matched it, so it treated it as two commands: `<leader>` (which does nothing on
-its own) and `x` (the normal command to delete a single character).
+`bar` dosyasında `<leader>x` tuşladığınızda Vim ona dair eşlemeyi bulamadı ve
+onu iki komuta ayırdı: `<leader>` (ki kendi başına bir şey yapmaz) ve `x` (ki
+bu da tek karakter silmeye yarar)
 
-Local Leader
-------------
+Yerel Lider (Local Leader)
+-----------
 
-In our example we used `<leader>x` for our buffer-local mapping, but this is bad
-form.  In general, when you create a mapping that only applies to specific
-buffers you should use `<localleader>` instead of `<leader>`.
+Biz yerel buffer örneğimizde `<leader>x` kullandık ama bu yanlış bir kullanım.
+Genelde sadece belli bufferlara etki edecek bir eşleme yaparken `<leader>`
+yerine `<localleader>` kullanılır.
 
-Using two separate leader keys provides a sort of "namespacing" that will help
-you keep all your various mappings straight in your head.
+Iki farklı lider tuşu kullanmak bir bakıma "namespacing"dir, bunun sayesinde
+farklı eşlemeleri aklınızda tutmanızı kolaylaştırır.
 
-It's even more important when you're writing a plugin for other people to use.
-The convention of using `<localleader>` for local mappings will prevent your
-plugin from overwriting someone else's `<leader>` mapping that they've
-painstakingly burned into their fingers over time.
+Bu bir plugin yazarken çok daha önemlidir. `<localleader>` kullanmak siz
+eşlemelerinizi yaparken yanlışlıkla başkasının uzun zamandır alışkın olduğu ve
+beynine kazınmış `<leader>` ile olan eşlemesini silmenize engel olur.
 
-Settings
---------
+Ayarlamalar
+-----------
 
-In one of the earliest chapters of the book we talked about settings options
-with `set`.  Some options always apply to all of Vim, but others can be set on
-a per-buffer basis.
+Bu kitabın önceki bölümlerinde `set` ile yapılan ayarlamaları görmüştük. Bazı
+ayarlar tüm Vim için geçerli olacak ancak diğerleri buffera özel olabilir.
 
-Switch to file `foo` and run the following command:
+`foo` dosyasına dönün ve şu komutu çalıştırın:
 
     :::vim
     :setlocal wrap
 
-Now switch to file `bar` and run this command:
+Şimdi `bar` dosyasına dönün ve şu komutu çalıştırın:
 
     :::vim
     :setlocal nowrap
 
-Make your Vim window smaller and you'll see that the lines in `foo` wrap, but
-the lines in `bar` don't.
+Vim pencerenizi biraz küçültecek olursanız `foo` dosyasındaki yazıların satır
+sonunda aşağı geçtiğini ama `bar` dosyasındaki yazıların öyle olmadığını
+göreceksiniz.
 
-Let's try another option.  Switch to `foo` and run this command:
+Hadi başka bir ayar için deneyelim. `foo` dosyasına geçin ve şu komutu
+çalıştırın:
 
     :::vim
     :setlocal number
 
-Now switch over to `bar` and run this command:
+Şimdi `bar` dosyasına dönün ve şu komutu çalıştırın:
 
     :::vim
     :setlocal nonumber
 
-You now have line numbers in `foo` but not in `bar`.
+Şimdi `foo` dosyasında satır sayıları gözüküyor ama `bar` dosyasında
+gözükmüyor.
 
-Not all options can be used with `setlocal`.  To see if you can set a particular
-option locally, read its `:help`.
+Her ayar `setlocal` ile ayarlanamaz. Eğer ki bir ayarın yerel olarak ayarlanıp
+ayarlanamayacağını anlamak istiyorsanız onun `:help` sayfasını okumanız
+gerekli.
 
-I've glossed over a bit of detail about how local options *actually* work for
-now.  In the exercises you'll learn more about the gory details.
+Yerel ayarların gerçekten nasıl çalıştığı hakkında birkaç detayı atladım
+şimdilik. Egzersizleri yaparken korkutucu detaylarla ilgili daha çok şey
+öğreneceksiniz.
 
-Shadowing
----------
+Gölgelemek
+----------
 
-Before we move on, let's look at a particularly interesting property of local
-mappings.  Switch over to `foo` and run the following commands:
+Daha ileri gitmeden önce yerel eşlemelerin ilginç bir özelliği hakkında
+konuşalım. `foo` dosyasına geçin ve şu komutları çalıştırın:
 
     :::vim
     :nnoremap <buffer> Q x
     :nnoremap          Q dd
 
-Now type `Q`.  What happens?
+Şimdi `Q` tuşuna basın. Ne oldu?
 
-When you press `Q`, Vim will run the first mapping, not the second, because the
-first mapping is *more specific* than the second.
+`Q` tuşuna bastığınızda Vim ilk eşlemeyi kullanacak ikinciyi değil, çünkü ilk
+eşleme ikinci eşlemeden daha spesifik.
 
-Switch to file `bar` and type `Q` to see that Vim uses the second mapping,
-because it's not shadowed by the first in this buffer.
+Şimdi `bar` dosyasına geçin ve `Q` tuşuna basın. Vim'in ikinci eşlemeyi
+kullandığını göreceksiniz çünkü bu bufferda ikinci eşleme başka bir eşleme ile
+gölgelenmiş değil.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Read `:help local-options`.
+`:help local-options` sayfasını oku.
 
-Read `:help setlocal`.
+`:help setlocal` sayfasını oku.
 
-Read `:help map-local`.
+`:help map-local` sayfasını oku.
