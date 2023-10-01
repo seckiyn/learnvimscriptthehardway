@@ -1,92 +1,90 @@
-Autocommands
+Otokomutlar
 ============
 
-Now we're going to look at a topic almost as important as mappings:
-autocommands.
+Şimdi neredeyse eşlemeler kadar önemli konulardan birisine göz atacağız:
+otokomutlar (autocommand)
 
-Autocommands are a way to tell Vim to run certain commands whenever certain
-events happen.  Let's dive right into an example.
+Otokomutlar Vim'e şöyle bir şey olduğunda şöyle bir komut çalıştır demenin bir
+yolu . Hadi hemen bir örneğe bakalım.
 
-Open a new file with `:edit foo` and close it right away with `:quit`.  Look on
-your hard drive and you'll notice that the file is not there.  This is because
-Vim doesn't actually *create* the file until you save it for the first time.
+`:edit foo` komutuyla bir dosya açın ve hemen `:quit` komutuyla kapatın. Sabit
+diskinize baktığınızda dosyanın orada olmadığını göreceksiniz. Çünkü Vim
+aslında siz kaydedene kadar dosyayı yaratmıyor.
 
-Let's change it so that Vim creates files as soon as you edit them.  Run the
-following command:
+Hadi bunu değiştirelim böylece Vim siz dosyayı açar açmaz kaydetsin. Şu
+komutları çalıştırın:
 
     :::vim
     :autocmd BufNewFile * :write
 
-This is a lot to take in, but try it out and see that it works.  Run `:edit foo`
-again, close it with `:quit`, and look at your hard drive.  This time the file
-will be there (and empty, of course).
+Bu biraz fazla olmuş olabilir ama deneyin ve çalıştığını görün. `:edit foo`
+komutunu tekrar çalıştırın ve `:quit` komutuyla çıkın ve sabit diskinize bakın.
+Bu sefer dosya orada olacak (tabii ki boş olarak)
 
-You'll have to close Vim to remove the autocommand.  We'll talk about how to
-avoid this in a later chapter.
+Otokomutu kaldırmak için Vim'i kapatmanız gerekecek. Bundan nasıl
+kurtulacağımızı sonraki bölümlerden birisinde göreceğiz.
 
-Autocommand Structure
+Otokomutun Yapısı
 ---------------------
 
-Let's take a closer look at the autocommand we just created:
+Hadi gelin daha önce çalıştırdığımız otokomuta bakalım:
 
     :::text
     :autocmd BufNewFile * :write
              ^          ^ ^
              |          | |
-             |          | The command to run.
+             |          | Çalıştırılacak komut
              |          |
-             |          A "pattern" to filter the event.
+             |          Olayı filtrelemek için "şablon"
              |
-             The "event" to watch for.
+             Izlenecek "olay"
 
-The first piece of the command is the type of event we want to watch for.  Vim
-offers *many* events to watch.  Some of them include:
+Komutun ilk parçası beklediğimiz olay. Vim beklenecek bir sürü olay veriyor.
+Bazıları şunlar:
 
-* Starting to edit a file that doesn't already exist.
-* Reading a file, whether it exists or not.
-* Switching a buffer's `filetype` setting.
-* Not pressing a key on your keyboard for a certain amount of time.
-* Entering insert mode.
-* Exiting insert mode.
+* Var olsun olmasın bir dosyanın okunması
+* Bir buffer'ın `filetype` ayarının değiştirilmesi
+* Klavyedeki bir tuşa bir süre boyunca basılmaması
+* Insert moda girilmesi
+* Insert moddan çıkılması
 
-This is just a tiny sample of the available events.  There are many more you can
-use to do lots of interesting things.
+Bu olayların sadece çok küçük bir parçası. Çok ilginç şeyler
+gerçekleştirebileceğiniz daha bir sürü olay var.
 
-The next part of the command is a "pattern" that lets you be more specific about
-when you want the command to fire.  Start up a new Vim instance and run the
-following command:
+Komutun sıradaki parçası komutu çok daha spesifik şekilde çağırmanızı
+sağlayacak bir "şablon". Yeni bir Vim açın ve şu komutu çalıştırın:
 
     :::vim
-    :autocmd BufNewFile *.txt :write
+    :autocmd BufNewFile `*`.txt :write
 
-This is almost the same as the last command, but this time it will only apply to
-files whose names end in `.txt`.
+Bu neredeyse diğer komutla aynı ama bu sefer sadece sadece `.txt` ile biten
+dosyaları etkileyecek.
 
-Try it out by running `:edit bar`, then `:quit`, then `:edit bar.txt`, then
-`:quit`.  You'll see that Vim writes the `bar.txt` automatically, but *doesn't*
-write `bar` because it doesn't match the pattern.
+Bunu `:edit bar` komutun çalıştırıp, `:quit` ile çıkıp tekrar `:edit bar.txt`
+komutunu çalıştırın ve yine `:quit` ile çıkın. Vim'in `bar.txt` dosyasını
+otomatik olarak yazdığını ancak şablona uymadığı için `bar` dosyasını
+yazmadığını göreceksiniz.
 
-The final part of the command is the command we want to run when the event
-fires.  This is pretty self-explanatory, except for one catch: you can't use
-special characters like `<cr>` in the command.  We'll talk about how to get
-around this limitation later in the book, but for now you'll just have to live
-with it.
+Komutun son parçası bunlar olursa çalıştırmak istediğimiz komutu gösteriyor.
+Burası kendi kendini açıklıyor bir şey hariç: burada `<cr>` gibi özel
+karakterleri kullanamazsınız. Bu sınırlamanın nasıl üstesinden gelebileceğimizi
+kitabın ilerisinde göreceğiz.
 
-Another Example
+Başka Bir Örnek
 ---------------
 
-Let's define another autocommand, this time using a different event.  Run the
-following command:
+Hadi başka bir otokomut tanımlayalım ama bu sefer farklı bir olay kullanalım.
+Şu komutu çalıştırın:
 
     :::vim
-    :autocmd BufWritePre *.html :normal gg=G
+    :autocmd BufWritePre `*`.html :normal gg=G
 
-We're getting a bit ahead of ourselves here because we're going to talk about
-`normal` later in the book, but for now you'll need to bear with me because it's
-tough to come up with useful examples at this point.
+Bu komutla biraz kendimizi aşıyoruz ama `normal` komutu ne onu daha sonra
+göreceğiz. Ama şimdilik görmezden gelin çünkü şu ana kadar öğrendiklerimizle
+yararlı bir örnek düşünmek biraz zor.
 
-Create a new file called `foo.html`.  Edit it with Vim and enter the following
-text *exactly*, including the whitespace:
+Şimdi `foo.html` isimli bir dosya yaratın. Vim ile açın ve şu yazıyı olduğu
+gibi kopyalayın, boşlukları da dahil edin.
 
     :::html
     <html>
@@ -95,86 +93,88 @@ text *exactly*, including the whitespace:
                      </body>
                       </html>
 
-Now save this file with `:w`.  What happened?  Vim seems to have reindented the
-file for us before saving it!
+Şimdi bu dosyayı `:w` ile kaydedin. Ne oldu? Vim kaydetmeden önce dosyadaki tüm
+yazıların boşluklarını yeniden düzenledi.
 
-For now I want you to trust me that running `:normal gg=G` will tell Vim to
-reindent the current file.  Don't worry about how that works just yet.
+`:normal gg=G` komutunun tüm dosyanın boşluklarını düzenler, şimdilik benim
+sözümle yetinmeniz gerekecek. Nasıl çalıştığını şimdilik kafayı takmayın.
 
-What we *do* want to pay attention to is the autocommand.  The event type is
-`BufWritePre`, which means the event will be checked just before you write *any*
-file.
+Bizim otokomuta dikkat etmemiz lazım. `BufWritePre` olayı, siz tam dosyayı
+kaydetmeden önce kontrol edilir.
 
-We used a pattern of `*.html` to ensure that this command will only fire when
-we're working on files that end in `.html`.  This lets us target our
-autocommands at specific files, which is a very powerful idea that we'll
-continue to explore later on.
+Sadece `.html` ile biten dosyalarda çalışmasından emin olmak için şablon olarak
+`*.html` kullandık. Böylece otokomutları spesifik dosyalar üzerinde
+kullanabiliriz ki bunun ne kadar güçlü bir özellik olduğunu diğer bölümlerde
+inceleyeceğiz.
 
-Multiple Events
+Çoklu Olaylar
 ---------------
 
-You can create a single autocommand bound to *multiple* events by separating the
-events with a comma.  Run this command:
+Tek bir otokomutu olaylar arasına virgül koyarak birden fazla olaya
+bağlayabilirsiniz. Şu komutu çalıştırın:
 
     :::vim
-    :autocmd BufWritePre,BufRead *.html :normal gg=G
+    :autocmd BufWritePre,BufRead `*`.html :normal gg=G
 
-This is almost like our last command, except it will also reindent the code
-whenever we *read* an HTML file as well as when we write it.  This could be
-useful if you have coworkers that don't indent their HTML nicely.
+Bu neredeyse önceki komutumuzla aynı ama bu sefer herhangi bir HTML dosyasını
+kaydetmemizden önce düzenleyeceği gibi ilk açtığımızda da düzenlenecek. HTML
+dosyalarını düzenlemeyen iş arkadaşlarınız varsa bu komut yararlı olabilir.
 
 A common idiom in Vim scripting is to pair the `BufRead` and `BufNewFile` events
 together to run a command whenever you open a certain kind of file, regardless
 of whether it happens to exist already or not.  Run the following command:
 
+Vim'de genel olarak `BufRead` ve `BufNewFile` olayları birlikte kullanılırlar,
+böylece herhangi bir dosya tipinden açtığınızda dosyanız daha önceden var olsun
+var olmasın komutu uygulayabilirsiniz. Şu komutu çalıştırın:
+
     :::vim
-    :autocmd BufNewFile,BufRead *.html setlocal nowrap
+    :autocmd BufNewFile,BufRead `*`.html setlocal nowrap
 
-This will turn line wrapping off whenever you're working on an HTML file.
+Bu HTML dosyası üzerinde çalışırken satırın aşağı geçmesini önleyecek.
 
-FileType Events
----------------
+Dosya Tipi Olayları
+-------------------
 
-One of the most useful events is the `FileType` event.  This event is fired
-whenever Vim sets a buffer's `filetype`.
+Vim'deki en yararlı olaylardan biri `FileType` olayıdır. Bu Vim bufferın
+`filetype` ayarını değiştirdiğinde çalışır.
 
-Let's set up a few useful mappings for a variety of file types.  Run the
-following commands:
+Hadi birkaç farklı dosya tipi için işimize yarayacak eşlemeler yapalım. Şu
+komutları çalıştırın.
 
     :::vim
     :autocmd FileType javascript nnoremap <buffer> <localleader>c I//<esc>
     :autocmd FileType python     nnoremap <buffer> <localleader>c I#<esc>
 
-Open a Javascript file (a file that ends in `.js`), pick a line and type
-`<localleader>c`.  This will comment out the line.
+Bir Javascript dosyası açın (`.js` ile biten herhangi bir dosya), herhangi bir
+satıra gidin ve `<localleader>c` tuşlarına basın. Bu o satırı yorum haline
+getirecek.
 
-Now open a Python file (a file that ends in `.py`), pick a line and type
-`<localleader>c`.  This will comment out the line, but it will use Python's
-comment character!
+Bir Python dosyası açın (`.py` ile biten herhangi bir dosya), herhangi bir
+satıra gidin ve `<localleader>c` tuşlarına basın. Bu o satırı yorum haline
+getirecek ama bu sefer python yorum karakterini kullanacak!
 
-Using autocommands alongside the buffer-local mappings we learned about in the
-last chapter we can create mappings that are specific to the type of file that
-we're editing.
+Yerel buffer ayarları ile otokomutları birlikte kullanarak dosya tipine özel
+olarak farklı eşlemeler yapabiliriz.
 
-This reduces the load on our minds when we're coding.  Instead of having to
-think about moving to the beginning of the line and adding a comment character
-we can simply think "comment this line".
+Bu kodlama yaparken gerekli beyin yükünü azaltıyor. Dosyanın başına gidip yorum
+karakterini eklemeyi düşünmek yerine biz sadece "bu satırı yorum haline getir"
+şeklinde düşünebiliriz.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Skim `:help autocmd-events` to see a list of all the events you can bind
-autocommands to.  You don't need to memorize each one right now.  Just try to
-get a feel for the kinds of things you can do.
+`:help autocmd-events` sayfasını gözden geçirin ve otokomutlara
+bağlayabileceğiniz olayları görün. Hepsini birden ezberlemenize gerek yok.
+Sadece neler yapabileceğinizi görün.
 
-Create a few `FileType` autocommands that use `setlocal` to set options for your
-favorite filetypes just the way you like them.  Some options you might like to
-change on a per-filetype basis are `wrap`, `list`, `spell`, and `number`.
+Kendi belirlediğiniz dosya tipleri için `FileType` otokomut olayını ve
+`setlocal` komutunu kullanarak ayarlarını değiştirin. Şu ayarları değiştirmek
+isteyebilirsiniz: `wrap`, `list`, `spell` ve `number`. 
 
-Create a few more "comment this line" autocommands for filetypes you work with
-often.
+Çok kullandığınız dosya tipleri için "bu satırı yorum haline getir" tarzında
+birkaç tane daha otokomut ekleyin.
 
-Add all of these autocommands to your `~/.vimrc` file.  Use your shortcut
-mappings for editing and sourcing it quickly, of course!
-
-
+Tüm bu eşlemeleri `~/.vimrc` dosyanıza ekleyin.  `~/.vimrc` dosyasını açarken
+geçen bölümlerde hazırladığımız dosyayı düzenle ve dosyayı kaynakla
+eşlemelerini kullanmayı unutmayın.
