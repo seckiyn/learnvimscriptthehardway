@@ -1,53 +1,50 @@
-Buffer-Local Abbreviations
-==========================
+Yerel Buffer Kısaltmaları
+=========================
 
-That last chapter was a monster, so let's tackle something easier.  We've seen
-how to define buffer-local mappings and options, so let's apply the same idea to
-abbreviations.
+Önceki bölüm çok uzun ve zor bir konuya değindik yani bu sefer kolay bir şeye
+bakalım. Daha önce nasıl yerel buffer eşlemeleri ve ayarları yapmayı öğrendik,
+şimdi bu özelliği kısaltmalara da ekleyelim.
 
-Open your `foo` and `bar` files again, switch to `foo`, and run the following
-command:
+`foo` ve `bar` dosyalarınızı tekrar açın ve `foo` dosyasına geçiş yapın ve şu
+komutları çalıştırın:
 
     :::vim
     :iabbrev <buffer> --- &mdash;
 
-While still in `foo` enter insert mode and type the following text:
+Hala `foo` dosyası içindeyken insert moda girip şu yazıyı yazalım:
 
     :::text
     Hello --- world.
 
-Vim will replace the `---` for you.  Now switch to `bar` and try it.  It should
-be no surprise that it's not replaced, because we defined the abbreviation to be
-local to the `foo` buffer.
+Vim `---` yazısını sizin için değiştirecek. Şimdi `bar` dosyasına geçin ve
+deneyin. Bu yazının değiştirilmemesi sizin için bir sürpriz olmayacaktır çünkü
+biz kısaltmanın `foo` bufferı için yerel olarak tanımladık.
 
-Autocommands and Abbreviations
-------------------------------
+Otokomutlar ve Kısaltmalar
+--------------------------
 
-Let's pair up these buffer-local abbreviations with autocommands to set them to
-make ourselves a little "snippet" system.
+Hadi bu yerel buffer kısaltmalarını ve otokomutları kullanarak kendimizi küçük
+bir "kod parçası" sistemi yapalım.
 
-Run the following commands:
+Şu komutları çalıştırın.
 
     :::vim
     :autocmd FileType python     :iabbrev <buffer> iff if:<left>
     :autocmd FileType javascript :iabbrev <buffer> iff if ()<left>
 
-Open a Javascript file and try out the `iff` abbreviation.  Then open a Python
-file and try it there too.  Vim will perform the appropriate abbreviation
-depending on the type of the current file.
+Bir Javascript dosyası açın ve `iff` kısaltmasını deneyin. Sonra da bir Python
+dosyası açın ve orada da deneyin. Vim gerekli kısaltmaları içinde bulunduğumuz
+dosyanın tipine göre değiştirecek.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Create a few more "snippet" abbreviations for some of the things you type often
-in specific kinds of files.  Some good candidates are `return` for most
-languages, `function` for javascript, and things like `&ldquo;` and `&rdquo;`
-for HTML files.
+Birkaç tane daha sizin çok kullandığınız dosya tipleri için "kod parçası" kısaltmaları yazın. Bazı göreve talip birkaç tane kelime: çoğu dil için `return`, Javascript için `function`, HTML dosyaları için `&ldquo;` ve `&rdquo;`.
 
-Add these snippets to your `~/.vimrc` file.
+Bu kod parçalarını `~/.vimrc` dosyanıza ekleyin.
 
-Remember: the best way to learn to use these new snippets is to *disable* the
-old way of doing things.  Running `:iabbrev <buffer> return NOPENOPENOPE` will
-*force* you to use your abbreviation instead.  Add these "training" snippets to
-match all the ones you created to save time.
+Unutmayın: yeni kod parçalarını öğrenmenin en iyi yolu onun eski yolunu etkisiz
+hale getirmektir. `:iabbrev <buffer> return NOPENOPENOPE` komutunu çalıştırmak
+sizi üstteki kısaltmayı kullanmaya zorlayacak. Yeni yarattığınız kısaltmalar
+için "egzersiz" komutlarını da ekleyin.
 
