@@ -1,68 +1,71 @@
-Autocommand Groups
+Otokomut Grupları
 ==================
 
-A few chapters ago we learned about autocommands.  Run the following command:
+Birkaç bölüm önce otokomutları öğrendik. Şu komutu çalıştırın:
 
     :::vim
     :autocmd BufWrite * :echom "Writing buffer!"
 
-Now write the current buffer with `:write` and run `:messages` to view the
-message log.  You should see the `Writing buffer!` message in the list.
+Şimdi üzerinde bulunduğunuz bufferı `:write` komutu ile kaydedin ve mesaj
+kayıtlarını görmek için `:messages` komutunu çalıştırın. Mesaj listesinde
+`Writing buffer!` yazısını görmeniz lazım.
 
-Now write the current buffer again and run `:messages` to view the message log.
-You should see the `Writing buffer!` message in the list twice.
+Şimdi bufferı tekrar kaydedin ve mesaj listesini görmek için `:messages`
+komutunu çalıştırın. Bu sefer listede iki defa `Writing buffer!` yazısını
+göreceksiniz.
 
-Now run the exact same autocommand again:
+Şimdi aynı otokomutu çalıştırın:
 
     :::vim
     :autocmd BufWrite * :echom "Writing buffer!"
 
-Write the current buffer one more time and run `:messages`.  You will see the
-`Writing buffer!` message in the list *four* times.  What happened?
+Şu anki bufferı bir kez daha kaydedin ve `:messages` komutunu çalıştırın.
+Listede `Writing buffer!` yazısını *dört* tane göreceksiniz. Ne oldu?
 
-When you create an autocommand like this Vim has no way of knowing if you want
-it to replace an existing one.  In our case, Vim created two *separate*
-autocommands that each happen to do the same thing.
+Böyle otokomut yarattığınızda Vim'in önceki otokomutu silip silmemesi gerektiği
+hakkında herhangi bir bilgisi olamaz. Bu durumda Vim aynı şeyi yapan iki
+*farklı* otokomut yarattı.
 
-The Problem
------------
+Sorun
+-----
 
-Now that you know it's possible to create duplicate autocommands, you may be
-thinking: "So what?  Just don't do that!"
+Şimdi otokomutların kopyalarını yaratabilmenin mümkün olduğunu biliyorsunuz,
+şöyle düşünüyor olabilirsiniz: "Ne olacak? Böyle bir şey yapma gitsin!"
 
-The problem is that sourcing your `~/.vimrc` file rereads the entire file,
-including any autocommands you've defined!  This means that every time you
-source your `~/.vimrc` you'll be duplicating autocommands, which will make Vim
-run slower because it executes the same commands over and over.
+`~/.vimrc` dosyasını kaynaklamanın sorunu tüm dosyayı yeniden okumasıdır,
+otokomutlar da dahil olmak üzere! Bu demek oluyor ki ne zaman `~/.vimrc`
+dosyanızı kaynaklasanız bir sürü otokomutu kopyalamış olacaksınız ki bu da aynı
+komutu sürekli çalıştıracağı için Vim'in yavaş çalışmasına neden olacak.
 
-To simulate this, try running the following command:
-
-    :::vim
-    :autocmd BufWrite * :sleep 200m
-
-Now write the current buffer.  You may or may not notice a slight sluggishness
-in Vim's writing time.  Now run the command three more times:
+Bunun bir örneğini görmek için şu komutu çalıştırın:
 
     :::vim
     :autocmd BufWrite * :sleep 200m
+
+Şimdi şu anki bufferı kaydedin. Fark etmemiş olabilirsiniz ancak Vim'in dosyayı
+yazması sırasında küçük bir yavaşlık oldu. Şimdi aynı komutu üç kez daha
+çalıştırın:
+
+    :::vim
     :autocmd BufWrite * :sleep 200m
     :autocmd BufWrite * :sleep 200m
+    :autocmd BufWrite * :sleep 200m
 
-Write the file again.  This time the slowness will be more apparent.
+Dosyayı tekrar kaydedin. Bu sefer yavaşlık çok daha belirgin olacak.
 
-Obviously you won't have any autocommands that do nothing but sleep, but the
-`~/.vimrc` of a seasoned Vim user can easily reach 1,000 lines, many of which will
-be autocommands.  Combine that with autocommands defined in any installed
-plugins and it can definitely affect performance.
+Tabii ki uyumaktan başka bir şey yapmayan komutlarınız olamayacak ama
+`~/.vimrc` dosyanızı modifiye ettikçe kolayca 1,000 satıra ulaşabilirsiniz ki
+bunların bazıları da otokomutlar olacak. Bunları pluginlerle eklenmiş
+olabilecek otokomutları da ekleyince kesinlikle performansı etkileyecek.
 
-Grouping Autocommands
----------------------
+Otokomutları Gruplamak
+----------------------
 
-Vim has a solution to the problem.  The first step is to group related
-autocommands into named groups. 
+Vim'in bu soruna bir çözümü var. İlk adım bağıntılı otokomutları
+isimlendirilmiş gruplara koymak.
 
-Open a fresh instance of Vim to clear out the autocommands from before, then run
-the following commands:
+Daha önceden yazdığım otokomutlardan kurtulmak için sıfırdan bir Vim açın ve şu
+komutları çalıştırın:
 
     :::vim
     :augroup testgroup
@@ -70,33 +73,34 @@ the following commands:
     :    autocmd BufWrite * :echom "Bar"
     :augroup END
 
-The indentation in the middle two lines is insignificant.  You don't have to
-type it if you don't want to.
+Ortadaki iki satırın hizalaması önemsiz. Istemiyorsanız boşlukları yazmanıza
+gerek yok.
 
-Write a buffer and check `:messages`.  You should see both `Foo` and `Bar`.  Now
-run the following commands:
+Bir bufferı kaydedin ve `:messages` sayfasını kontrol edin. Hem `Foo` hem de
+`Bar` yazılarını görmeniz lazım. Şimdi şu komutları çalıştırın.
 
     :::vim
     :augroup testgroup
     :    autocmd BufWrite * :echom "Baz"
     :augroup END
 
-Try to guess what will happen when you write the buffer again.  Once you have
-a guess in mind, write the buffer and check `:messages` to see if you were
-correct.
+Şimdi bufferı tekrar kaydettiğimizde ne olacak tahmin etmeye çalışın. Aklınızda
+bir fikir oluşunca bufferı kaydedin ve `:messages` sayfasını kontrol edin doğru
+olup olmadığınızı görmek için.
 
-Clearing Groups
----------------
+Grupları Temizlemek
+-------------------
 
-What happened when you wrote the file?  Was it what you expected?
+Dosyayı yazdığınızda ne oldu? Beklediğiniz şey miydi?
 
-If you thought Vim would replace the group, you can see that you guessed
-wrong.  Don't worry, most people think the same thing at first (I know I did).
+Eğer ki Vim'in yeni grubu önceki grubun üzerine yazacağını tahmin ettiyseniz,
+doğru tahmin edemediniz. Merak etmeyin, çoğu insan aynı şekilde düşünürdü (Ben
+de dahil olmak üzere)
 
-When you use `augroup` multiple times Vim will *combine* the groups each time.
+`augroup` komutunu birkaç kez kullandığınızda Vim onları *birleştirecek*.
 
-If you want to *clear* a group you can use `autocmd!` inside the group.  Run the
-following commands:
+Eğer ki bir grubu *temizlemek* istiyorsanız grubun içinde `autocmd!` komutunu
+kullanmanız gerekiyor. Şu komutları çalıştırın:
 
     :::vim
     :augroup testgroup
@@ -104,17 +108,17 @@ following commands:
     :    autocmd BufWrite * :echom "Cats"
     :augroup END
 
-Now try writing your file and checking `:messages`.  This time Vim only echoed
-`Cats` when you wrote the file.
+Şimdi dosyanızı kaydedin ve `:messages` sayfasını kontrol edin. Dosyayı
+kaydettiğinizde bu sefer Vim sadece `Cats` yazısını yazdı.
 
-Using Autocommands in Your Vimrc
---------------------------------
+Vimrc Dosyanızda Otokomutları Kullanmak
+---------------------------------------
 
-Now that we know how to group autocommands and clear those groups, we can use
-this to add autocommands to `~/.vimrc` that don't add a duplicate every time we
-source it.
+Şimdi nasıl otokomut yaratılır ve temizlenir biliyoruz, şimdi bu otokomutları
+`~/.vimrc` dosyamıza ekleyebiliriz ve her kaynakladığımızda kopyalarını
+da yaratmayacak.
 
-Add the following to your `~/.vimrc` file:
+Şu komutları `~/.vimrc` dosyanıza ekleyin:
 
     :::vim
     augroup filetype_html
@@ -122,18 +126,17 @@ Add the following to your `~/.vimrc` file:
         autocmd FileType html nnoremap <buffer> <localleader>f Vatzf
     augroup END
 
-We enter the `filetype_html` group, immediately clear it, define an autocommand,
-and leave the group.  If we source `~/.vimrc` again the clearing will prevent
-Vim from adding duplicate autocommands.
+`filetype_html` grubuna girdiğimiz gibi onu temizliyoruz, daha sonra bir
+otokomut tanımlıyoruz ve grubu terk ediyoruz. Temizlemek eğer ki `~/.vimrc`
+dosyamızı tekrar kaynaklarsak otokomut kopyalarının yaratılmasını önleyecek.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Go through your `~/.vimrc` file and wrap *every* autocommand you have in groups
-like this.  You can put multiple autocommands in the same group if it makes
-sense to you.
+`~/.vimrc` dosyanızı gezin ve *her* otokomutu yaptığımız gibi grup içine sarın.
+Size mantıklı gelen otokomutları aynı gruba ekleyebilirsiniz.
 
-Try to figure out what the mapping in the last example does.
+Son örnekteki eşlemenin ne yaptığını anlamaya çalışın.
 
-Read `:help autocmd-groups`.
+`:help autocmd-groups` sayfasını okuyun.
 
