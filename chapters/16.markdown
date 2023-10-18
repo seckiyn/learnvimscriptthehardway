@@ -1,14 +1,14 @@
-More Operator-Pending Mappings
-==============================
+Daha Fazla Operatör-Bekleyen Eşlemeler
+======================================
 
-The idea of operators and movements is one of the most important concepts in Vim,
-and it's one of the biggest reasons Vim is so efficient.  We're going to
-practice defining new motions a bit more, because extending this powerful idea
-makes Vim even *more* powerful.
+Operatör ve hareketler Vim içerisindeki en güçlü konseptlerden biri ve bu ikisi
+Vim bu kadar verimli olmasının en büyük sebeplerinden birisi. Biraz daha yeni
+hareket tanımlama pratiği yapacağız, çünkü bu güçlü özellik Vim *çok daha*
+güçlü kılacak.
 
-Let's say you're writing some text in Markdown.  If you haven't used Markdown
-before, don't worry, for our purposes here it's very simple.  Type the following
-into a file:
+Diyelim ki bir Markdown dosyasına yazı yazacaksınız. Eğer daha önce Markdown
+kullanmadıysanız merak etmeyin, telaşlanmayın, bizim burada kullanacağımız şey
+çok basit. Şunu bir dosyanın içine yazın:
 
     :::markdown
     Topic One
@@ -23,23 +23,24 @@ into a file:
 
     This is some text about topic two.  It has only one paragraph.
 
-The lines "underlined" with `=` characters are treated as headings by Markdown.
-Let's create some mappings that let us target headings with movements.  Run the
-following command:
+Bu altları `=` çizilmiş karakterler Markdown tarafından başlık olarak görülür.
+Hadi bize hareketleri kullanarak başlıkları hedef almamızı sağlayacak eşlemeler
+yapalım. Şu komutu çalıştırın:
 
     :::vim
     :onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
 
-This mapping is pretty complicated, so put your cursor in one of the paragraphs
-(not the headings) and type `cih`.  Vim will delete the heading of whatever
-section you're in and put you in insert mode ("change inside heading").
+Bu eşleme biraz karışık, imlecinizi paragraflardan birinin üzerine getirin
+(başlığın değil) ve `cih` tuşlarına basın. Vim hangi bölümdeyseniz onun
+başlığını silecek ve sizi insert moduna girecek (**c**hange **i**nside
+**h**eading (başlık içini değiştir))
 
-It uses some things we've never seen before, so let's look at each piece
-individually.  The first part of the mapping, `:onoremap ih` is just the mapping
-command that we've seen before, so we'll skip over that.  We'll keep ignoring
-the `<c-u>` for the moment as well.
+Bu eşleme daha önce görmediğimiz şeyleri kullanıyor, o yüzden her parçasına
+teker teker bakalım. Eşlemenin ilk parçası `:onoremap ih` sadece eşleme komutu
+bunu çoktan biliyoruz yani bunu geçeceğiz. Şimdilik `<c-u>` tuşlarını da
+görmezden geleceğiz.
 
-Now we're looking at the remainder of the line:
+Şimdi komutun gerisine bakalım:
 
     :::vim
     :execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -47,128 +48,129 @@ Now we're looking at the remainder of the line:
 Normal
 ------
 
-The `:normal` command takes a set of characters and performs whatever action
-they would do if they were typed in normal mode.  We'll go into greater detail
-in a later chapter, but we've seen it a few times already so it's time to at
-least get a taste.  Run this command:
+`:normal` komutu birtakım karakterleri alır ve sanki normal moddaymışçasına
+işlevlerini gerçekleştirir. Daha detaylarına önümüzdeki bölümlerde bakacağız
+ama şimdiden birkaç kez karşımıza çıktı yani artık biraz da olsun öğrenme vakti
+geldi. Şu komutu çalıştırın:
 
     :::vim
     :normal gg
 
-Vim will move you to the top of the file.  Now run this command:
+Vim sizi dosyanın başına taşıyacak. Şimdi şu komutu çalıştırın:
 
     :::vim
     :normal >>
 
-Vim will indent the current line.
+Vim şu anki satırın başına boşluklandıracak.
 
-For now, don't worry about the `!` after `normal` in our mapping.  We'll talk
-about that later.
+Şimdilik eşlemedeki `!` nedir kafanıza takmayın. Onun hakkında daha sonra
+konuşacağız.
 
 Execute
 -------
 
-The `execute` command takes a Vimscript string (which we'll cover in more detail
-later) and performs it as a command.  Run this:
+`execute` komutu string formatında (string nedir daha sonra ne olduğunu
+detaylıca göreceğiz) alır ve onu bir komut olarak uygular. Şunu çalıştırın:
 
     :::vim
     :execute "write"
 
-Vim will write your file, just as if you had typed `:write<cr>`.  Now run this
-command:
+Vim sizin dosyanızı kaydedecek aynı siz `:write<cr>` yazmışçasınıza. Şimdi şu
+komutu çalıştırın.
 
     :::vim
     :execute "normal! gg"
 
-Vim will run `:normal! gg`, which as we just saw will move you to the top of the
-file.  But why bother with this when we could just run the `normal!` command
-itself?
+Vim `:normal! gg` komutunu çalıştıracak ki önceden gördüğümüz gibi bizi
+dosyanın başına taşıyor. Ama doğrudan `normal!` komutunun kendini kullanmak
+yerine neden bununla uğraşalım?
 
-Look at the following command and try to guess what it will do:
+Şimdi şu komuta bakın ve ne yapacağını tahmin etmeye çalışın:
 
     :::vim
     :normal! gg/a<cr>
 
-It seems like it should:
+Şunu yapması gerekiyor gibi:
 
-* Move to the top of the file.
-* Start a search.
-* Fill in "a" as the target to search for.
-* Press return to perform the search.
+* Dosyanın başına git.
+* Bir arama başlat.
+* Aramada "a" karakterini hedefle.
+* Return tuşuna basarak aramayı başlat.
 
-Run it.  Vim will move to the top of the file and nothing else!
+Şimdi çalıştırın. Vim sadece dosyanızın en üst kısmına gidecek ve başka bir şey
+yapmayacak.
 
-The problem is that `normal!` doesn't recognize "special characters" like
-`<cr>`.  There are a number of ways around this, but the easiest to use and read
-is `execute`.
+`normal!` komutunun sorunu `<cr>` gibi "özel karakterleri" tanımaması. Bu
+kısıtlamanın üstesinden gelmek için birkaç yol var ancak en kolay yolu
+`execute` komutunu kullanmak.
 
-When `execute` looks at the string you tell it to run, it will substitute any
-special characters it finds *before* running it.  In this case, `\r` is an
-escape sequence that means "carriage return".  The double backslash is also an
-escape sequence that puts a literal backslash in the string.
+`execute` verdiğiniz yazıya bakarak daha çalıştırmadan *önce* özel karakterleri
+kendi karşılıkları ile değiştirilecek. Bu durumda `\r` satır başı anlamına
+gelir. Çifte ters eğik çizgi ters eğik çizginin kendisine eşittir.
 
-If we perform this replacement in our mapping and look at the result we can see
-that the mapping is going to perform:
+Eğer ki eşlemede bunları göz önüne alarak değişiklikler yaparsak sonunda ne
+çıkacağını görebiliriz:
 
     :::text
     :normal! ?^==\+$<cr>:nohlsearch<cr>kvg_
                     ^^^^           ^^^^
                      ||             ||
-    These are ACTUAL carriage returns, NOT the four characters
-    "left angle bracket", "c", "r", and "right angle bracket".
+    Bunlar aslında satır başları, dört karakterin kendisi değil
+    "sol açılı ayraç", "c", "r", ve "sağ açılı ayraç".
 
-So now `normal!` will execute these characters as if we had typed them in normal
-mode.  Let's split them apart at the returns to find out what they're doing:
+Artık şimdi `normal!` komutu gerçekten sanki bunları normal modda tuşlamışız
+gibi davranacak. Hadi şimdi hepsini ayıralım ve tam da ne yapacağını görelim:
 
     :::vim
     ?^==\+$
     :nohlsearch
     kvg_
 
-The first piece, `?^==\+$` performs a search backwards for any line that
-consists of two or more equal signs and nothing else. This will leave our cursor
-on the first character of the line of equal signs.
+Ilk parça `?^==\+$` komutu iki veya daha fazla eşittir işareti içeren
+kelimeleri arayan tersine bir arama başlatır. Bu komut imlecimizi eşittir
+işareti olan satırın başında bırakır.
 
-We're searching backwards because when you say "change inside heading" while
-your cursor is in a section of text, you probably want to change the heading for
-*that* section, not the next one.
+Tersine arama yapıyoruz çünkü "başlık içinde değiştir (change inside heading)"
+derken büyük ihtimalle o an üzerinde bulunduğumuz paragrafın başlığını
+değiştirmek istiyoruz. Sonraki paragrafın başlığını değil.
 
-The second piece is the `:nohlsearch` command.  This simply clears the search
-highlighting from the search we just performed so it's not distracting.
+Ikinci parça bir `:nohlsearch` komutu. Bu, basitçe, arama yaparken vurgulamayı
+kaldırır böylece arama yaparken rahatsız olmayacağız.
 
-The final piece is a sequence of three normal mode commands:
+Son parça üç farklı normal mod komutu:
 
-* `k`: move up a line.  Since we were on the first character of the line of
-  equal signs, we're now on the first character of the heading text.
-* `v`: enter (characterwise) visual mode.
-* `g_`: move to the last non-blank character of the current line.  We use this
-  instead of `$` because `$` would highlight the newline character as well, and
-  this isn't what we want.
+* `k`: bir satır yukarı. Eşittir işareti olan satırın başında olduğumuza göre
+  bir yukarı çıkarak başlığın bulunduğu satıra gelmiş olduk.
+* `v`: visual moda giriş yap.
+* `g_`: şu anda bulunduğun satırın son boş olmayan karakterine git. `$` yerine
+  bunu kullanıyoruz çünkü `$` yeni satıra geçme karakterini de içine alır. Bu
+  da istediğimiz bir şey değil.
 
-Results
--------
+Sonuçlar
+--------
 
-That was a lot of work, but now we've looked at each part of the mapping.  To
-recap:
+Bu çok uzun oldu ancak şimdi tüm eşlemeyi görmüş olduk. Son kez yeniden gözden
+geçirelim:
 
-* We created a operator-pending mapping for "inside this section's heading".
-* We used `execute` and `normal!` to run the normal commands we needed to select
-  the heading, and allowing us to use special characters in those.
-* Our mapping searches for the line of equal signs which denotes a heading and
-  visually selects the heading text above that.
-* Vim handles the rest.
+* Bu bölümün başlığını kapsayan bir operatör-bekleyen eşleme yaptık.
+* `execute` ve `normal!` komutlarını kullanarak normal mod komutlarını
+  kullanarak başlığı bulduk ve nasıl bunlar içinde özel karakter kullanılır onu
+  öğrendik.
+* Bu eşlememiz üzerindeki başlığı gösteren eşittir işaretlerini buldu ve
+  onların üzerinde bulunan başlığı görsel olarak seçti.
+* Gerisini Vim halletti.
 
-Let's look at one more mapping before we move on.  Run the following command:
+Daha ileri gitmeden bir eşlemeye daha bakalım. Şu komutu çalıştırın:
 
     :::vim
     :onoremap ah :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
 
-Try it by putting your cursor in a section's text and typing `cah`.  This time
-Vim will delete not only the heading's text but also the line of equal signs
-that denotes a heading.  You can think of this movement as "*around* this
-section's heading".
+Başlığını değiştirmek istediğiniz bölümün üzerine gelin ve `cah` tuşlayarak
+deneyin. Bu sefer Vim sadece başlığın yazısını değiştirmekle kalmayacak eşittir
+işaretlerini de temizleyecek. Bu hareketi "bu bölümün başlığının etrafı (around
+this section's heading)" olarak düşünebilirsiniz.
 
-What's different about this mapping?  Let's look at them side by side:
+Bu eşlemede neler farklı? Hadi gelin yan yana bakalım:
 
     :::vim
     :onoremap ih :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
@@ -177,40 +179,49 @@ What's different about this mapping?  Let's look at them side by side:
 The only difference from the previous mapping is the very end, where we select
 the text to operate on:
 
+Bu eşlemenin diğer eşlemeden tek farkı en sonda, üzerinde işlem yapacağımız yazıyı seçerkenki kısımda:
+
     :::text
     inside heading: kvg_
     around heading: g_vk0
 
-The rest of the mapping is the same, so we still start on the first character of
-the line of equal signs.  From there:
+Geri kalan eşleme birebir aynı bu yüzden eşittir işaretlerinin olduğu yerden
+başlayacağız. Oradan başlayarak:
 
-* `g_`: move to the last non-blank character in the line.
-* `v`: enter (characterwise) visual mode.
-* `k`: move up a line.  This puts us on the line containing the heading's text.
-* `0`: move to the first character of the line.
+* `g_`: satırda son boş olmayan karaktere git.
+* `v`: visual moda giriş yap.
+* `k`: bir satır yukarı git. Bu bizi başlığın yazısını içeren kısıma taşır.
+* `0`: satırın ilk karakterine gel.
 
-The result is that both the text and the equal signs end up visually selected,
-and Vim performs the operation on both.
+Bunun sonucunda hem yazı hem de eşittir işaretleri görsel olarak seçilecek ve
+Vim ikisinin de üzerinde işlem uygulayacak.
 
-Exercises
----------
+Egzersizler
+-----------
 
-Markdown can also have headings delimited with lines of `-` characters.  Adjust
-the regex in these mappings to work for either type of heading.  You may want to
-check out `:help pattern-overview`.  Remember that the regex is inside of
-a string, so backslashes will need to be escaped.
+Markdown aynı zamanda `-` karakterlerini kullanarak da başlık belirtebilir.
+Eşlemedeki regex komutlarını düzenleyerek iki tip başlığı da kabul eden bir
+hâle getirin. `:help pattern-overview` sayfasını kontrol etmek
+isteyebilirsiniz. Unutmayın regex bir string içerisinde yani ters eğik
+çizgilerin çifte ters eğik çizgi kullanılarak kaçılması gerekecek.
 
 Add two autocommands to your `~/.vimrc` file that will create these mappings.
 Make sure to only map them in the appropriate buffers, and make sure to group
 them so they don't get duplicated each time you source the file.
 
-Read `:help normal`.
+`~/.vimrc` dosyanıza bu komutları ekleyen iki adet otokomut ekleyin. Onları
+doğru bufferlara eşlediğinizden emin olun ve onları gruplamayı ihmal etmeyin
+böylece her kaynaklandığında klonlanıp yeniden işlenmesinler.
 
-Read `:help execute`.
+`:help normal` sayfasını okuyun.
 
-Read `:help expr-quote` to see the escape sequences you can use in strings.
+`:help execute` sayfasını okuyun.
 
-Create a "inside next email address" operator-pending mapping so you can say
-"change inside next email address".  `in@` is a good candidate for the keys to
-map. You'll probably want to use `/...some regex...<cr>` for this.
+`:help expr-quote` sayfasını okuyarak string yapılarında ne tip kaçış
+karakterleri kullanabileceğinizi görün.
 
+"diğer email adresinin içinde (inside next email address) hareketini
+gerçekleştiren operatör-bekleyen eşleme yapın böylece "change inside next email
+address" gibi bir komutu kullanabilin. `in@` karakterleri bu iş için uygun bir
+seçim olabilir. Büyük ihtimalle bu iş için `/...biraz regex...<cr>` kullanmak
+isteyebilirsiniz.
